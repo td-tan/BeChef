@@ -1,0 +1,656 @@
+{
+  "summary": {
+    "title": "BeChef Threat Model",
+    "owner": "td-tan"
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "title": "BeChef",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
+        "id": 0,
+        "$$hashKey": "object:121",
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 61,
+                "y": 57
+              },
+              "angle": 0,
+              "id": "5beba7a3-9b63-4606-9cca-086e50be60bf",
+              "z": 1,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "User"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 791,
+                "y": 355
+              },
+              "angle": 0,
+              "id": "beac1852-9f3c-4a06-a2a2-3b2b7b89c17c",
+              "z": 4,
+              "hasOpenThreats": true,
+              "description": "",
+              "storesCredentials": true,
+              "storesInventory": true,
+              "threats": [
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "Plaintext passwords threat",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "A malicious  attacker will steal passwords after breach",
+                  "mitigation": "Use secure hashing algorithm with salt and pepper for passwords",
+                  "threatId": "e411eea2-f19f-4092-be1e-5cf054003570",
+                  "$$hashKey": "object:1997"
+                }
+              ],
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "MongoDB Database"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 783,
+                "y": 61
+              },
+              "angle": 0,
+              "id": "97bc4050-979a-4c28-ae7c-0cd8d3f192c7",
+              "z": 19,
+              "hasOpenThreats": true,
+              "isALog": true,
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Log manipulation threat",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "A malicious attacker can manipulate logs",
+                  "mitigation": "Set logs to be read-only by other services",
+                  "threatId": "5eff45ec-142d-43c9-9ad5-8e32db11f0e0",
+                  "$$hashKey": "object:2431"
+                }
+              ],
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Logs"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 428,
+                "y": 5
+              },
+              "target": {
+                "x": 48,
+                "y": 323
+              },
+              "vertices": [],
+              "id": "db1b0d94-d1dd-4e91-a187-d93c56ec9516",
+              "z": 21,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 353,
+                "y": 77
+              },
+              "angle": 0,
+              "id": "d5aa69eb-d521-4b6b-b0b0-609d98d3fbca",
+              "z": 39,
+              "hasOpenThreats": true,
+              "isWebApplication": true,
+              "threats": [
+                {
+                  "ruleId": "b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc",
+                  "title": "Brute-force attack threat",
+                  "type": "Spoofing",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "A malicious attacker can brute force accounts (ex. credential stuffing)",
+                  "mitigation": "Limit failed login rates",
+                  "threatId": "86a82d4f-7389-4a1d-badc-6ee0f5676d20",
+                  "$$hashKey": "object:2729"
+                },
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Injection threat",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "A malicious attacker can inject javascript",
+                  "mitigation": "Use validation and sanitization framework",
+                  "threatId": "1be64030-dc67-4086-ba5e-4ddc6bcbc10a",
+                  "$$hashKey": "object:1763"
+                },
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "Public sensitive information threat",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "Sensitive information can be stored in public",
+                  "mitigation": "Do not store sensitive information public",
+                  "threatId": "b88b5ba4-cd82-442f-9266-069cd1e2aa24",
+                  "$$hashKey": "object:1781"
+                },
+                {
+                  "ruleId": "c1377855-ea20-4c97-8861-f95c364fb8d2",
+                  "title": "Team admin elevation threat",
+                  "type": "Elevation of privilege",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A malicious attacker can elevate his/her privilege to team admin",
+                  "mitigation": "Use framework access controls",
+                  "threatId": "0c9f7f4a-c672-490a-b373-3e2cfca8a09b",
+                  "$$hashKey": "object:2753"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "modelType": "STRIDE",
+                  "type": "Repudiation",
+                  "title": "No logging threat",
+                  "description": "Application has no logging daemon",
+                  "mitigation": "Implement logging mechanism",
+                  "threatId": "6c34e59a-982e-4449-8f79-0fe31417f81e",
+                  "$$hashKey": "object:2831"
+                }
+              ],
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Angular App"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "5beba7a3-9b63-4606-9cca-086e50be60bf"
+              },
+              "target": {
+                "id": "d5aa69eb-d521-4b6b-b0b0-609d98d3fbca"
+              },
+              "vertices": [],
+              "id": "1e7c7715-f04e-485d-88ae-d82fe5a0532e",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "HTTPS",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 40,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Generic tampering threat",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A generic tampering threat",
+                  "mitigation": "Use SSL encryption for data transfer",
+                  "threatId": "0e29af27-89be-40f2-ab62-ed08b5660b68",
+                  "$$hashKey": "object:2641"
+                },
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "Generic information disclosure threat",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A generic information disclosure threat",
+                  "mitigation": "Use SSL encryption for data transfer",
+                  "threatId": "66b99e30-9a54-4c82-ab60-2c8bf743c2ec",
+                  "$$hashKey": "object:2713"
+                },
+                {
+                  "ruleId": "edb05d76-a695-455f-947b-7d67b78bc31d",
+                  "title": "DDoS threat",
+                  "type": "Denial of service",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A malicious attacker can use a botnet to launch a DDoS",
+                  "mitigation": "Use DDoS mitigation service (Cloudflare) or a reverse proxy",
+                  "threatId": "82d189cb-fbbe-49af-865f-a9b38df02189",
+                  "$$hashKey": "object:2388"
+                }
+              ],
+              "isPublicNetwork": true,
+              "isEncrypted": true,
+              "protocol": "HTTPS",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "d5aa69eb-d521-4b6b-b0b0-609d98d3fbca"
+              },
+              "target": {
+                "id": "97bc4050-979a-4c28-ae7c-0cd8d3f192c7"
+              },
+              "vertices": [],
+              "id": "464d55ac-4aaa-4cb7-9bcc-a40b523b9622",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "logging",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 41,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Overwrite logs threat",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A malicious attacker can overwrite old logs",
+                  "mitigation": "Set logs only to be appendable",
+                  "threatId": "db2bbc08-b526-47ec-89d2-469dfef0e6ee",
+                  "$$hashKey": "object:2544"
+                },
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "Logging sensitive information threat",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A generic information disclosure threat",
+                  "mitigation": "A logger can be configured to log everything, even sensitive information like passwords etc.",
+                  "threatId": "6a568b08-3552-42b5-9184-03289af5848d",
+                  "$$hashKey": "object:1817"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 543,
+                "y": 204
+              },
+              "angle": 0,
+              "id": "42d86a0d-86dd-4bad-92ff-095bc3e86acd",
+              "z": 43,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "ruleId": "b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc",
+                  "title": "Generic spoofing threat",
+                  "type": "Spoofing",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A generic spoofing threat",
+                  "mitigation": "Mitigation or prevention for the threat",
+                  "threatId": "caa71e2b-68db-49be-ade4-bfa290fd7352",
+                  "$$hashKey": "object:2861"
+                },
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Generic tampering threat",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A generic tampering threat",
+                  "mitigation": "Mitigation or prevention for the threat",
+                  "threatId": "4062d589-5ae9-43d5-9095-9a33031fce52",
+                  "$$hashKey": "object:1907"
+                },
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "Generic information disclosure threat",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A generic information disclosure threat",
+                  "mitigation": "Mitigation or prevention for the threat",
+                  "threatId": "c7a3c7e3-c686-4d17-a54a-049bf29de735",
+                  "$$hashKey": "object:2790"
+                },
+                {
+                  "ruleId": "c1377855-ea20-4c97-8861-f95c364fb8d2",
+                  "title": "Generic elevation threat",
+                  "type": "Elevation of privilege",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A generic elevation of privileges threat",
+                  "mitigation": "Mitigation or prevention for the threat",
+                  "threatId": "96a64d9a-1955-42ca-9852-095645ec6cb8",
+                  "$$hashKey": "object:1943"
+                }
+              ],
+              "handlesGoodsOrServices": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Express.js API"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "d5aa69eb-d521-4b6b-b0b0-609d98d3fbca"
+              },
+              "target": {
+                "id": "42d86a0d-86dd-4bad-92ff-095bc3e86acd"
+              },
+              "vertices": [],
+              "id": "900a2456-ec18-4df9-bc9f-a4c62a005ad4",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "get",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 44,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Broken access control threat",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "A malicious attacker can edit data of other users",
+                  "mitigation": "Configure correct access control or use framework default configurations",
+                  "threatId": "384195d1-4355-4c38-a5dd-6efbae2aa653",
+                  "$$hashKey": "object:2409"
+                },
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "Debug error message threat",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "All error message  should not server more information than necessary for the user",
+                  "mitigation": "Disable debug and use error message templates",
+                  "threatId": "c0575c16-9c25-4c47-b537-d6e7044acae9",
+                  "$$hashKey": "object:2801"
+                },
+                {
+                  "ruleId": "edb05d76-a695-455f-947b-7d67b78bc31d",
+                  "title": "API DoS threat",
+                  "type": "Denial of service",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A malicious attacker can query API without limit",
+                  "mitigation": "Limit API requests per user from IP",
+                  "threatId": "e9a48b9d-5701-414a-8b5f-4ccb007556fb",
+                  "$$hashKey": "object:1889"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "42d86a0d-86dd-4bad-92ff-095bc3e86acd"
+              },
+              "target": {
+                "id": "beac1852-9f3c-4a06-a2a2-3b2b7b89c17c"
+              },
+              "vertices": [],
+              "id": "1248801e-48c6-4685-9a58-ec8d403eecd2",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "query",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 45,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "NoSQL injection threat",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "A malicious attacker can inject commands into database",
+                  "mitigation": "Validate and sanitize queries",
+                  "threatId": "3694eebc-c285-4022-8c72-bdee9f420e26",
+                  "$$hashKey": "object:2480"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 206,
+                "y": 329
+              },
+              "angle": 0,
+              "id": "35706bec-221a-4a22-8893-2f86c88aea14",
+              "z": 46,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Env Config"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "35706bec-221a-4a22-8893-2f86c88aea14"
+              },
+              "target": {
+                "id": "d5aa69eb-d521-4b6b-b0b0-609d98d3fbca"
+              },
+              "vertices": [],
+              "id": "0152d189-6ed5-407e-b192-c40fc8e72e4f",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "init",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 47,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            }
+          ]
+        },
+        "size": {
+          "height": 969,
+          "width": 1110
+        }
+      }
+    ]
+  }
+}
