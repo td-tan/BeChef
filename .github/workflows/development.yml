@@ -32,4 +32,4 @@ jobs:
         run: npm ci
         
       - name: Run Angular tests
-        run: ng test
+        run: ng test --no-watch --no-progress
