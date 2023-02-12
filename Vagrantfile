@@ -71,6 +71,6 @@ Vagrant.configure("2") do |config|
      mkdir ~/node_modules
      ln -sf ~/node_modules /vagrant_data/
      cd /vagrant_data
-     npm install
+     npm ci
   SHELL
 end
