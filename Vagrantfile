@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "debian/buster64"
+  config.vm.box = "ubuntu/kinetic64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -43,18 +43,30 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder ".", "/vagrant_data"
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # require plugin https://github.com/leighmcculloch/vagrant-docker-compose
+  config.vagrant.plugins = "vagrant-docker-compose"
+
+  # Install Docker and Docker Compose
+  # Build and run angular app
+  config.vm.provision :docker do |d|
+    d.build_image "/vagrant", args: "-t ng-app-img"
+    d.run "ng-app-img", args: "-d -p 4200:4200 --name ng-app"
+  end
+  config.vm.provision :docker_compose
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
-  # Display the VirtualBox GUI when booting the machine
+     # Display the VirtualBox GUI when booting the machine
   #   vb.gui = true
   #
-    # Customize the amount of memory on the VM:
-    vb.memory = "1024"
+     # Customize the amount of memory on the VM:
+     vb.memory = "2048"
+     vb.cpus = "2"
   end
   #
   # View the documentation for the provider you are using for more
@@ -63,15 +75,8 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-     curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &&\
-     apt-get update
-     apt-get install -y nodejs
-     mkdir $VAGRANT_HOME/node_modules
-     mkdir /vagrant_data/node_modules
-     mount --bind $VAGRANT_HOME/node_modules /vagrant_data/node_modules
-     cd /vagrant_data
-     npm i -g @angular/cli
-     npm ci
-  SHELL
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
+  #   apt-get install -y apache2
+  # SHELL
 end
