@@ -67,10 +67,11 @@ Vagrant.configure("2") do |config|
      curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &&\
      apt-get update
      apt-get install -y nodejs
-     npm install -g @angular/cli
-     mkdir ~/node_modules
-     ln -sf ~/node_modules /vagrant_data/
+     mkdir $VAGRANT_HOME/node_modules
+     mkdir /vagrant_data/node_modules
+     mount --bind $VAGRANT_HOME/node_modules /vagrant_data/node_modules
      cd /vagrant_data
+     npm i -g @angular/cli
      npm ci
   SHELL
 end
