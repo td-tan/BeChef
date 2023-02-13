@@ -30,6 +30,9 @@ jobs:
   
       - name: Install dependencies
         run: npm ci
+
+      - name: Install Angular-CLI
+        run: npm install -g @angular/cli
         
       - name: Run Angular tests
-        run: ng test --no-watch --no-progress
+        run: ng test --no-watch --no-progress --watch=false --browsers=ChromeHeadlessCI
