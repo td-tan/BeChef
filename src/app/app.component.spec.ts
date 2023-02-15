@@ -46,4 +46,16 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('footer .github-profile')?.textContent).toContain('td-tan');
 
   });
+
+  it('should have powered by stack in footer', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('footer .stack')?.textContent).toContain('powered by');
+    expect(compiled.querySelector('footer .stack .mongodb')).toBeTruthy();
+    expect(compiled.querySelector('footer .stack .expressjs')).toBeTruthy();
+    expect(compiled.querySelector('footer .stack .angular')).toBeTruthy();
+    expect(compiled.querySelector('footer .stack .nodejs')).toBeTruthy();
+  });
 });
