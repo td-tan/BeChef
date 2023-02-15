@@ -58,4 +58,12 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('footer .stack .angular')).toBeTruthy();
     expect(compiled.querySelector('footer .stack .nodejs')).toBeTruthy();
   });
+
+  it('should have YOU CAN card', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('main .card')).toBeTruthy();
+    expect(compiled.querySelector('main .card h2')?.textContent).toContain('YOU CAN');
+  });
 });
