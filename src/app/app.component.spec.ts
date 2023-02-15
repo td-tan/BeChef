@@ -37,4 +37,13 @@ describe('AppComponent', () => {
     expect(compiled.querySelectorAll('header nav a')?.length).toBe(2);
 
   });
+
+  it('should have github link in footer', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('footer .github-profile')?.textContent).toContain('td-tan');
+
+  });
 });
