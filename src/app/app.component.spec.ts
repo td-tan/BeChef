@@ -28,4 +28,13 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('header span')?.textContent).toContain('Welcome to BeChef');
   });
+
+  it('should have login and register link', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelectorAll('header nav a')?.length).toBe(2);
+
+  });
 });
