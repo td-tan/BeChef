@@ -1,5 +1,6 @@
 header
-    height: 50px
+    min-height: 50px
+    min-width: 500px
     background-color: #F67280
     color: #355C7D
 
@@ -11,12 +12,20 @@ header
 
     display: flex
     justify-content: space-between
+    flex-wrap: wrap
+
+    *
+        flex: 1 1 100px
+        margin-left: 10px
 
     nav
         display: flex
+        justify-content: flex-end
         gap: 12px
 
         a
+            height: 50px
+            max-width: 200px
             text-decoration: none
             color: #355C7D
             border-bottom: 2px solid
