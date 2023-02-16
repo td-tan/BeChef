@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from './user.model';
-import { share, shareReplay } from 'rxjs';
+import { shareReplay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
