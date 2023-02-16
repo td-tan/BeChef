@@ -1,7 +1,7 @@
 <header>
   <span>Welcome to {{title}}</span>
   <nav>
-    <a href="/login">Login</a>
+    <a [routerLink] = "['/login']" [ngClass]="{'active': isLoginRoute()}">Login</a>
     <a href="/register">Register</a>
   </nav>
 </header>
@@ -15,6 +15,7 @@
       <li><span class="triangle-right"></span><span class="highlight">BE THE CHEF</span> of the kitchen</li>
     </ul>
   </article>
+  <router-outlet></router-outlet>
 </main>
 <footer>
   <a class="github-profile" href="https://github.com/td-tan/BeChef">
