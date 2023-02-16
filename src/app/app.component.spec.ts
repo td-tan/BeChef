@@ -26,6 +26,44 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('BeChef app is running!');
+    expect(compiled.querySelector('header span')?.textContent).toContain('Welcome to BeChef');
+  });
+
+  it('should have login and register link', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelectorAll('header nav a')?.length).toBe(2);
+
+  });
+
+  it('should have github link in footer', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('footer .github-profile')?.textContent).toContain('td-tan');
+
+  });
+
+  it('should have powered by stack in footer', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('footer .stack')?.textContent).toContain('powered by');
+    expect(compiled.querySelector('footer .stack .mongodb')).toBeTruthy();
+    expect(compiled.querySelector('footer .stack .expressjs')).toBeTruthy();
+    expect(compiled.querySelector('footer .stack .angular')).toBeTruthy();
+    expect(compiled.querySelector('footer .stack .nodejs')).toBeTruthy();
+  });
+
+  it('should have YOU CAN card', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('main .card')).toBeTruthy();
+    expect(compiled.querySelector('main .card h2')?.textContent).toContain('YOU CAN');
   });
 });

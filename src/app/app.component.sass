@@ -1,0 +1,145 @@
+header
+    min-height: 60px
+    min-width: 500px
+    background-color: #F67280
+    color: #355C7D
+
+    font-size: 40px
+    font-weight: bolder
+
+    padding: 30px
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4)
+
+    display: flex
+    justify-content: space-between
+    flex-wrap: wrap
+
+    *
+        flex: 1 1 100px
+        margin-left: 10px
+
+    nav
+        display: flex
+        justify-content: flex-end
+        gap: 12px
+
+        a
+            height: 50px
+            max-width: 200px
+            text-decoration: none
+            color: #355C7D
+            border-bottom: 2px solid
+            border-radius: 16px
+            padding: 0 12px
+
+        a:hover
+            color: #355C7D
+            border: 2px solid
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4)
+
+        a:active
+            background-color: #355C7D
+            color: #F67280
+
+main
+    flex: 1
+
+    article
+        margin: 50px
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2)
+        border-radius: 12px
+
+.card
+    width: 500px
+    padding: 0 0 5px
+    color: #355C7D
+
+    h2
+        background-color: #F67280
+        color: #355C7D
+        margin: 0
+        padding: 10px 20px
+        border-top-left-radius: 12px
+        border-top-right-radius: 12px
+
+    li
+        padding: 4px
+        list-style: none
+
+.triangle-right
+    display: inline-block
+    width: 0
+    height: 0
+    background-color: white
+    border-top: 6px solid transparent
+    border-left: 6px solid #F67280
+    border-bottom: 6px solid transparent
+    margin-right: 12px
+
+.highlight
+    color: #F67280
+    font-weight: bolder
+
+footer
+    background-color: #355C7D
+
+    display: flex
+    justify-content: center
+    flex-wrap: wrap
+    gap: 25px
+
+    min-width: 560px
+
+    a
+        text-decoration: none
+        font-size: 25px
+        font-weight: bold
+        color: white
+
+        img:hover
+            opacity: 0.5
+
+
+.github-profile
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    img
+        width: 64px
+        height: 64px
+        margin: 10px
+
+.github-profile:hover img, 
+.github-profile:hover span
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4)
+        border-radius: 50px
+        color: #F67280
+
+.stack
+    display: flex
+    align-items: center
+
+    span
+        color: white
+        font-weight: bold
+
+.mongodb
+    img
+        width: 120px
+        height: 100px
+        margin: 10px
+
+.expressjs
+    img
+        width: 64px
+
+.angular
+    img
+        width: 64px
+        height: 64px
+        margin: 10px
+
+.nodejs
+    img
+        width: 100px
