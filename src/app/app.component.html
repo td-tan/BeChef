@@ -2,7 +2,7 @@
   <h1>{{title}}</h1>
   <nav>
     <a [routerLink] = "['/login']" [ngClass]="{'active': isLoginRoute()}">Login</a>
-    <a href="/register">Register</a>
+    <a [routerLink] = "['/register']" [ngClass]="{'active': isRegisterRoute()}">Register</a>
   </nav>
 </header>
 <main>

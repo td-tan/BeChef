@@ -1,0 +1,24 @@
+<form [formGroup]="form">
+    <fieldset>
+        <legend>Registration</legend>
+        <div class="form-field">
+            <label for="username">Username</label>
+            <input id="username" name="username" formControlName="username">
+        </div>
+        <div class="form-field">
+            <label for="email">Email</label>
+            <input id="email" name="email" formControlName="email">
+        </div>
+        <div class="form-field">
+            <label for="password">Password</label>
+            <input id="password" name="password" formControlName="password" type="password">
+        </div>
+        <div class="form-field">
+            <label for="passwordRepeat">Confirm Password</label>
+            <input id="passwordRepeat" name="passwordRepeat" formControlName="passwordRepeat" type="passwordRepeat">
+        </div>
+    </fieldset>
+    <div class="form-buttons">
+        <button class="button button-primary" (click)="register()">Register</button>
+    </div>
+</form>
