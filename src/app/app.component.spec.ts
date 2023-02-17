@@ -28,7 +28,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('header span')?.textContent).toContain('Welcome to BeChef');
+    expect(compiled.querySelector('header h1')?.textContent).toContain('BeChef');
   });
 
   it('should have login and register link', () => {
