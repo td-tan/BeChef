@@ -15,4 +15,10 @@ export class AuthService {
       shareReplay()
     );
   }
+
+  register(username:string, email:string, password:string, passwordRepeat:string) {
+    return this.http.post<User>('/api/register', {username, email, password, passwordRepeat}).pipe(
+      shareReplay()
+    );
+  }
 }
