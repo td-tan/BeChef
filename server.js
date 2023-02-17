@@ -4,8 +4,15 @@ const port = process.env.PORT || 3000;
 
 require('dotenv').config();
 
-app.get('/', (req, res) => {
-  res.send(process.env.SECRET_KEY);
+app.use(express.json());
+
+app.post('/api/login', (req, res) => {
+  const email = req.body.email,
+        password = req.body.password;
+  
+  // Need to validate email and pw
+  console.log(email, password);
+  res.send("Hello World!");
 });
 
 app.listen(port, () => {
