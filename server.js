@@ -37,7 +37,7 @@ const userSchema = Schema({
 userSchema.methods.hashPassword = function(password) {
   this.salt = crypto.randomBytes(16).toString('Hex');
 
-  this.hash = crypto.scryptSync(password, this.salt, 64).toString('hex');
+  this.hash = crypto.scryptSync(password+process.env.SECRET_KEY, this.salt, 64).toString('hex');
 }
 
 const User = mongoose.model("User", userSchema);
