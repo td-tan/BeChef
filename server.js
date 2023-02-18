@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const crypto = require('crypto');
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -33,6 +34,12 @@ const userSchema = Schema({
   salt: String
 });
 
+userSchema.methods.hashPassword = function(password) {
+  this.salt = crypto.randomBytes(16).toString('Hex');
+
+  this.hash = crypto.scryptSync(password, this.salt, 64).toString('hex');
+}
+
 const User = mongoose.model("User", userSchema);
 
 
@@ -56,7 +63,7 @@ app.post('/api/login', (req, res) => {
 });
 
 app.post('/api/register', (req, res) => {
-  if (req.body.password !== req.bodypasswordRepeat) {
+  if (req.body.password !== req.body.passwordRepeat) {
     res.send('Passwords do not match.');
     return;
   }
