@@ -55,6 +55,26 @@ app.post('/api/login', (req, res) => {
   });
 });
 
+app.post('/api/register', (req, res) => {
+  if (req.body.password !== req.bodypasswordRepeat) {
+    res.send('Passwords do not match.');
+    return;
+  }
+
+  let newUser = User();
+  newUser.username = req.body.username;
+  newUser.email = req.body.email;
+  newUser.hashPassword(req.body.password);
+
+  newUser.save((err, User) => {
+    if (err) return handleError(err);
+    console.log(User);
+    res.send('User was created successfully.');
+    return;
+  });
+  
+});
+
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
