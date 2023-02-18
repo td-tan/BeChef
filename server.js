@@ -50,7 +50,10 @@ app.post('/api/login', (req, res) => {
   
 
   User.findOne({ email: email}, (err, document) => {
-    if (err) return handleError(err);
+    if (err) {
+      console.error(err);
+      return;
+    }
 
     if(Object.is(document, null)) {
       res.send('Something went wrong.');
@@ -74,7 +77,10 @@ app.post('/api/register', (req, res) => {
   newUser.hashPassword(req.body.password);
 
   newUser.save((err, User) => {
-    if (err) return handleError(err);
+    if (err) {
+      console.error(err);
+      return;
+    }
     console.log(User);
     res.send('User was created successfully.');
     return;
