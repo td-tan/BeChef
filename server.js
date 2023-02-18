@@ -21,9 +21,16 @@ mongoose.connect(process.env.DB_CONN_URI + '/test')
 const Schema = mongoose.Schema;
 
 const userSchema = Schema({
-  username: String,
-  email: String,
-  password: String
+  username: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  hash: String,
+  salt: String
 });
 
 const User = mongoose.model("User", userSchema);
@@ -32,6 +39,8 @@ const User = mongoose.model("User", userSchema);
 app.post('/api/login', (req, res) => {
   const email = req.body.email,
         password = req.body.password;
+
+  
 
   User.findOne({ email: email}, (err, document) => {
     if (err) return handleError(err);
