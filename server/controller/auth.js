@@ -5,24 +5,24 @@ const User = require('../model/user');
 const RSA_PRIVATE_KEY = fs.readFileSync('./private.key');
 
 function login(req, res) {
-    User.findOne({ email: req.body.email}, (err, User) => {
+    User.findOne({ email: req.body.email}, (err, user) => {
         if (err) {
           console.error(err);
           return;
         }
     
-        if(Object.is(User, null)) {
+        if(Object.is(user, null)) {
           res.send('Something went wrong.');
           return;
         }
     
-        if (User.verifyPassword(req.body.password)) {
+        if (user.verifyPassword(req.body.password)) {
           console.log("MATCH");
     
           const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn: 120,
-            subject: User.id
+            subject: user.id
           });
           console.log(jwtBearerToken);
     
@@ -32,8 +32,8 @@ function login(req, res) {
           });
           
           res.send({
-            username: User.username,
-            email: User.email
+            username: user.username,
+            email: user.email
           });
         } else {
           console.log("NO MATCH");
