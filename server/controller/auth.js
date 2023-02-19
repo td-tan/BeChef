@@ -4,15 +4,24 @@ const fs = require('fs');
 const User = require('../model/user');
 const RSA_PRIVATE_KEY = fs.readFileSync('./private.key');
 
+function errorhandler(err) {
+  console.log(err)
+  res.status(500).send({
+    error: 'Something went wrong'
+  });
+}
+
 function login(req, res) {
     User.findOne({ email: req.body.email}, (err, user) => {
         if (err) {
-          console.error(err);
+          errorhandler(err);
           return;
         }
     
         if(Object.is(user, null)) {
-          res.send('Something went wrong.');
+          res.send({
+            error: 'Email is not registered'
+          });
           return;
         }
     
@@ -37,6 +46,9 @@ function login(req, res) {
           });
         } else {
           console.log("NO MATCH");
+          res.send({
+            error: 'Password does not match'
+          });
         }
       });
 }
@@ -55,7 +67,7 @@ function register(req, res) {
     
       User.exists(emailOrUsername, (err, user) => {
         if(err) {
-            console.error(err);
+            errorhandler(err);
             return;
         }
         if(!Object.is(user, null)) {
@@ -70,8 +82,8 @@ function register(req, res) {
         
         newUser.save((err, User) => {
             if (err) {
-            console.error(err);
-            return;
+              errorhandler(err);
+              return;
             }
             console.log(User);
             res.send('User was created successfully.');
