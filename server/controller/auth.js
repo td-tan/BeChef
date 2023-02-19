@@ -41,7 +41,7 @@ function login(req, res) {
       });
 }
 
-async function register(req, res) {
+function register(req, res) {
     if (req.body.password !== req.body.passwordRepeat) {
         res.send('Passwords do not match.');
         return;
