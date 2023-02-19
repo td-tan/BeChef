@@ -3,6 +3,9 @@
 # DOTENV
 .env
 
+# KEYS
+private.key
+
 # Compiled output
 /dist
 /tmp

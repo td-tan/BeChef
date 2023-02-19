@@ -2,12 +2,16 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 const User = require('./server/model/user');
 
 const app = express();
 
 const port = process.env.PORT || 3000;
+const RSA_PRIVATE_KEY = fs.readFileSync('./private.key');
+
 
 app.use(express.json());
 
@@ -34,10 +38,26 @@ app.post('/api/login', (req, res) => {
 
     if (User.verifyPassword(req.body.password)) {
       console.log("MATCH");
+
+      const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
+        algorithm: 'RS256',
+        expiresIn: 120,
+        subject: User.id
+      });
+      console.log(jwtBearerToken);
+
+      res.cookie("SESSIONID", jwtBearerToken, {
+        httpOnly: true, 
+        secure: true
+      });
+      
+      res.send({
+        username: User.username,
+        email: User.email
+      });
     } else {
       console.log("NO MATCH");
     }
-    res.send(`Hello ${User.email}`);
   });
 });
 
