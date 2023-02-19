@@ -11,6 +11,16 @@ function errorhandler(err) {
   });
 }
 
+function authenticate(req, res) {
+  console.log(req.cookies);
+  try {
+    const decoded = jwt.verify(jwtBearerToken, RSA_PRIVATE_KEY);
+  } catch(err) {
+    res.status(401).send('Invalid Token');
+    return;
+  }
+}
+
 function login(req, res) {
     User.findOne({ email: req.body.email}, (err, user) => {
         if (err) {
