@@ -1,8 +1,9 @@
 require('dotenv').config();
 
-const crypto = require('crypto');
 const express = require('express');
 const mongoose = require('mongoose');
+
+const User = require('./server/model/user');
 
 const app = express();
 
@@ -18,35 +19,6 @@ mongoose.connect(process.env.DB_CONN_URI + '/test')
   .catch(error => {
     console.error('Error connecting to the database:', error);
 });
-
-const Schema = mongoose.Schema;
-
-const userSchema = Schema({
-  username: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    required: true
-  },
-  hash: String,
-  salt: String
-});
-
-userSchema.methods.hashPassword = function(password) {
-  this.salt = crypto.randomBytes(16).toString('Hex');
-
-  this.hash = crypto.scryptSync(password+process.env.SECRET_KEY, this.salt, 64).toString('hex');
-}
-
-userSchema.methods.verifyPassword = function(password) {
-  const hash = crypto.scryptSync(password+process.env.SECRET_KEY, this.salt, 64).toString('hex');
-  return this.hash === hash;
-}
-
-const User = mongoose.model("User", userSchema);
-
 
 app.post('/api/login', (req, res) => {
   User.findOne({ email: req.body.email}, (err, document) => {
