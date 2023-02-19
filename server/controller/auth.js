@@ -53,25 +53,30 @@ async function register(req, res) {
         {username: req.body.username} 
       ]};
     
-      if (await User.exists(emailOrUsername)) {
-        console.log('User does exists.');
-        res.send('User does exists.');
-        return;
-      }
-    
-      let newUser = User();
-      newUser.username = req.body.username;
-      newUser.email = req.body.email;
-      newUser.hashPassword(req.body.password);
-    
-      newUser.save((err, User) => {
-        if (err) {
-          console.error(err);
-          return;
+      User.exists(emailOrUsername, (err, user) => {
+        if(err) {
+            console.error(err);
+            return;
         }
-        console.log(User);
-        res.send('User was created successfully.');
-        return;
+        if(!Object.is(user, null)) {
+            console.log('User does exists.');
+            res.send('User does exists.');
+            return;
+        }
+        let newUser = User();
+        newUser.username = req.body.username;
+        newUser.email = req.body.email;
+        newUser.hashPassword(req.body.password);
+        
+        newUser.save((err, User) => {
+            if (err) {
+            console.error(err);
+            return;
+            }
+            console.log(User);
+            res.send('User was created successfully.');
+            return;
+        });
       });
 }
 
