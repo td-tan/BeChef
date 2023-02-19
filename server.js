@@ -40,16 +40,16 @@ userSchema.methods.hashPassword = function(password) {
   this.hash = crypto.scryptSync(password+process.env.SECRET_KEY, this.salt, 64).toString('hex');
 }
 
+userSchema.methods.verifyPassword = function(password) {
+  const hash = crypto.scryptSync(password+process.env.SECRET_KEY, this.salt, 64).toString('hex');
+  return this.hash === hash;
+}
+
 const User = mongoose.model("User", userSchema);
 
 
 app.post('/api/login', (req, res) => {
-  const email = req.body.email,
-        password = req.body.password;
-
-  
-
-  User.findOne({ email: email}, (err, document) => {
+  User.findOne({ email: req.body.email}, (err, document) => {
     if (err) {
       console.error(err);
       return;
@@ -60,7 +60,11 @@ app.post('/api/login', (req, res) => {
       return;
     }
 
-    console.log(document.password);
+    if (document.verifyPassword(req.body.password)) {
+      console.log("MATCH");
+    } else {
+      console.log("NO MATCH");
+    }
     res.send(`Hello ${document.email}`);
   });
 });
