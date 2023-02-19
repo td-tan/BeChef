@@ -54,11 +54,6 @@ function login(req, res) {
 }
 
 function register(req, res) {
-    if (req.body.password !== req.body.passwordRepeat) {
-        res.send('Passwords do not match.');
-        return;
-      }
-    
       const emailOrUsername = { 
         $or: [
         {email: req.body.email}, 
