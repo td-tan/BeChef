@@ -21,23 +21,23 @@ mongoose.connect(process.env.DB_CONN_URI + '/test')
 });
 
 app.post('/api/login', (req, res) => {
-  User.findOne({ email: req.body.email}, (err, document) => {
+  User.findOne({ email: req.body.email}, (err, User) => {
     if (err) {
       console.error(err);
       return;
     }
 
-    if(Object.is(document, null)) {
+    if(Object.is(User, null)) {
       res.send('Something went wrong.');
       return;
     }
 
-    if (document.verifyPassword(req.body.password)) {
+    if (User.verifyPassword(req.body.password)) {
       console.log("MATCH");
     } else {
       console.log("NO MATCH");
     }
-    res.send(`Hello ${document.email}`);
+    res.send(`Hello ${User.email}`);
   });
 });
 
