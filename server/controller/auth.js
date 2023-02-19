@@ -41,7 +41,7 @@ function login(req, res) {
       });
 }
 
-function register(req, res) {
+async function register(req, res) {
     if (req.body.password !== req.body.passwordRepeat) {
         res.send('Passwords do not match.');
         return;
@@ -53,9 +53,9 @@ function register(req, res) {
         {username: req.body.username} 
       ]};
     
-      if(User.findOne(emailOrUsername).exec()) {
-        console.log("User already exists.");
-        res.send("User already exists.");
+      if (await User.exists(emailOrUsername)) {
+        console.log('User does exists.');
+        res.send('User does exists.');
         return;
       }
     
