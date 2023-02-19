@@ -47,6 +47,18 @@ app.post('/api/register', (req, res) => {
     return;
   }
 
+  const emailOrUsername = { 
+    $or: [
+    {email: req.body.email}, 
+    {username: req.body.username} 
+  ]};
+
+  if(User.findOne(emailOrUsername).exec()) {
+    console.log("User already exists.");
+    res.send("User already exists.");
+    return;
+  }
+
   let newUser = User();
   newUser.username = req.body.username;
   newUser.email = req.body.email;
