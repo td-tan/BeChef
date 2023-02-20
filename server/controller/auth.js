@@ -40,8 +40,7 @@ function login(req, res) {
           });
           
           res.send({
-            username: user.username,
-            email: user.email
+            success: true
           });
         } else {
           console.log("NO MATCH");
@@ -65,8 +64,10 @@ function register(req, res) {
             return;
         }
         if(!Object.is(user, null)) {
-            console.log('User does exists.');
-            res.send('User does exists.');
+            console.log('User does exists');
+            res.send({
+              error: 'User does exists'
+            });
             return;
         }
         let newUser = User();
@@ -80,7 +81,9 @@ function register(req, res) {
               return;
             }
             console.log(User);
-            res.send('User was created successfully.');
+            res.send({
+              success: true
+            });
             return;
         });
       });
