@@ -1,6 +1,7 @@
 <form [formGroup]="form">
     <fieldset>
         <legend>Registration</legend>
+        <div *ngIf="error" class="error-msg">{{error_msg}}</div>
         <div class="form-field">
             <label for="username">Username</label>
             <input id="username" name="username" formControlName="username">
