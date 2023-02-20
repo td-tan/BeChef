@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const AuthController = require('./server/controller/auth');
+const UserController = require('./server/controller/user');
 
 const app = express();
 
@@ -23,6 +24,7 @@ mongoose.connect(process.env.DB_CONN_URI + '/test')
 
 app.post('/api/login', AuthController.login);
 app.post('/api/register', AuthController.register);
+app.get('/api/user', UserController.getUser);
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
