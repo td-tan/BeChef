@@ -11,11 +11,19 @@ export class AppComponent {
 
   constructor(private router:Router) {}
 
+  isHomeRoute() : Boolean {
+    return this.router.url === '/';
+  }
+
   isLoginRoute() : Boolean {
     return this.router.url === '/login';
   }
 
   isRegisterRoute() : Boolean {
     return this.router.url === '/register';
+  }
+
+  isDashboardRoute() : Boolean {
+    return this.router.url === '/dashboard';
   }
 }

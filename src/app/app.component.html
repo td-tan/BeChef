@@ -1,12 +1,13 @@
 <header>
   <h1>{{title}}</h1>
   <nav>
-    <a [routerLink] = "['/login']" [ngClass]="{'active': isLoginRoute()}">Login</a>
-    <a [routerLink] = "['/register']" [ngClass]="{'active': isRegisterRoute()}">Register</a>
+    <a *ngIf="!isDashboardRoute()" [routerLink] = "['/login']" [ngClass]="{'active': isLoginRoute()}">Login</a>
+    <a *ngIf="!isDashboardRoute()" [routerLink] = "['/register']" [ngClass]="{'active': isRegisterRoute()}">Register</a>
+    <a *ngIf="isDashboardRoute()">Logout</a>
   </nav>
 </header>
 <main>
-  <article class="card">
+  <article *ngIf="isHomeRoute() || isLoginRoute() || isRegisterRoute()" class="card">
     <h2>YOU CAN</h2>
     <ul>
       <li><span class="triangle-right"></span><span class="highlight">CREATE</span> and <span class="highlight">SHARE</span> your recipes with other users</li>
