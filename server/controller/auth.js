@@ -2,14 +2,9 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
 const User = require('../model/user');
-const RSA_PRIVATE_KEY = fs.readFileSync('./private.key');
+const Error = require('./error');
 
-function errorhandler(err, req, res) {
-  console.log(err)
-  res.status(500).send({
-    error: 'Something went wrong'
-  });
-}
+const RSA_PRIVATE_KEY = fs.readFileSync('./private.key');
 
 function authenticate(jwtBearerToken) {
   return jwt.verify(jwtBearerToken, RSA_PRIVATE_KEY);
@@ -18,7 +13,7 @@ function authenticate(jwtBearerToken) {
 function login(req, res) {
     User.findOne({ email: req.body.email}, (err, user) => {
         if (err) {
-          errorhandler(err, req, res);
+          Error.errorhandler(err, req, res);
           return;
         }
     
@@ -66,7 +61,7 @@ function register(req, res) {
     
       User.exists(emailOrUsername, (err, user) => {
         if(err) {
-            errorhandler(err, req, res);
+            Error.errorhandler(err, req, res);
             return;
         }
         if(!Object.is(user, null)) {
@@ -81,7 +76,7 @@ function register(req, res) {
         
         newUser.save((err, User) => {
             if (err) {
-              errorhandler(err, req, res);
+              Error.errorhandler(err, req, res);
               return;
             }
             console.log(User);
