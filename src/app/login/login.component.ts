@@ -33,7 +33,9 @@ export class LoginComponent {
             this.error = true;
             this.error_msg = response['error'];
           } else {
-            this.router.navigateByUrl('/Dashboard');
+            if(response['success']) {
+              this.router.navigateByUrl('/Dashboard');
+            }
           }
         });
     }
