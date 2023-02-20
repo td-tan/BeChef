@@ -9,6 +9,8 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./registration.component.sass']
 })
 export class RegistrationComponent {
+  error:Boolean = false;
+  error_msg: String = '';
   form:FormGroup;
 
   constructor(private fb:FormBuilder, 
@@ -25,11 +27,17 @@ export class RegistrationComponent {
   register() {
     const val = this.form.value;
 
-    if (val.username && val.email && val.password && val.passwordRepeat) {
-      this.authService.register(val.username, val.email, val.password, val.passwordRepeat)
-        .subscribe(() => {
-          console.log("User is registered");
-          this.router.navigateByUrl('/Dashboard');
+    if (val.username && val.email && val.password) {
+      this.authService.register(val.username, val.email, val.password)
+        .subscribe((response: any) => {
+          if (response['error']) {
+            this.error = true;
+            this.error_msg = response['error'];
+          } else {
+            if(response['success']) {
+              this.router.navigateByUrl('/Dashboard');
+            }
+          }
         });
     }
   }

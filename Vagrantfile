@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/kinetic64"
+  config.vm.box = "ubuntu/jammy64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -29,6 +29,8 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
   config.vm.network "forwarded_port", guest: 4200, host: 4200, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 27017, host: 27017, host_ip: "127.0.0.1"
+
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -51,8 +53,8 @@ Vagrant.configure("2") do |config|
   # Install Docker and Docker Compose
   # Build and run angular app
   config.vm.provision :docker do |d|
-    d.build_image "/vagrant", args: "-t ng-app-img"
-    d.run "ng-app-img", args: "-d -p 4200:4200 --name ng-app"
+    # d.build_image "/vagrant", args: "-t ng-app-img"
+    # d.run "ng-app-img", args: "-d -p 4200:4200 --name ng-app"
   end
   config.vm.provision :docker_compose
 
@@ -75,8 +77,15 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get upgrade -y
+    apt-get install -y gnupg
+    wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+    apt-get update
+    apt-get install -y mongodb-org
+    systemctl start mongod
+    systemctl enable mongod
+  SHELL
 end

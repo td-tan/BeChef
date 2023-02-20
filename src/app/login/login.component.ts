@@ -9,6 +9,8 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent {
+  error:Boolean = false;
+  error_msg: String = '';
   form:FormGroup;
 
   constructor(private fb:FormBuilder, 
@@ -26,9 +28,15 @@ export class LoginComponent {
 
     if (val.email && val.password) {
       this.authService.login(val.email, val.password)
-        .subscribe(() => {
-          console.log("User is logged in");
-          this.router.navigateByUrl('/Dashboard');
+        .subscribe((response: any) => {
+          if (response['error']) {
+            this.error = true;
+            this.error_msg = response['error'];
+          } else {
+            if(response['success']) {
+              this.router.navigateByUrl('/Dashboard');
+            }
+          }
         });
     }
   }
