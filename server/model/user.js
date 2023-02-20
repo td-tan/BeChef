@@ -12,8 +12,18 @@ const UserSchema = mongoose.Schema({
     unique: true,
     required: true
   },
-  hash: String,
-  salt: String
+  hash: {
+    type: String,
+    required: true
+  },
+  salt: {
+    type: String,
+    required: true
+  },
+  points: {
+    type: Number,
+    default: 0
+  },
 });
 
 UserSchema.methods.hashPassword = function(password) {
