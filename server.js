@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const AuthController = require('./server/controller/auth');
 const UserController = require('./server/controller/user');
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -12,6 +13,7 @@ const port = process.env.PORT || 3000;
 
 
 app.use(express.json());
+app.use(cookieParser());
 
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.DB_CONN_URI + '/test')
