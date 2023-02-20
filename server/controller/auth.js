@@ -11,14 +11,8 @@ function errorhandler(err) {
   });
 }
 
-function authenticate(req, res) {
-  console.log(req.cookies);
-  try {
-    const decoded = jwt.verify(jwtBearerToken, RSA_PRIVATE_KEY);
-  } catch(err) {
-    res.status(401).send('Invalid Token');
-    return;
-  }
+function authenticate(jwtBearerToken) {
+  return jwt.verify(jwtBearerToken, RSA_PRIVATE_KEY);
 }
 
 function login(req, res) {
@@ -40,7 +34,7 @@ function login(req, res) {
     
           const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
-            expiresIn: 120,
+            expiresIn: "120",
             subject: user.id
           });
           console.log(jwtBearerToken);
@@ -99,5 +93,6 @@ function register(req, res) {
 
 module.exports = { 
     login, 
-    register 
+    register,
+    authenticate
 };
