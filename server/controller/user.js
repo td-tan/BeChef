@@ -1,11 +1,11 @@
 const User = require('../model/user');
+
 const AuthController = require('./auth');
+const ErrorController = require('./error');
 
 function getUser(req, res) {
     if (!req.cookies) {
-        res.send({
-            error: 'Something went wrong'
-        });
+        ErrorController.errorhandler(err);
     }
     const jwtBearerToken = req.cookies['SESSIONID'];
     try {
