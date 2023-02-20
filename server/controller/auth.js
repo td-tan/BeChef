@@ -4,7 +4,7 @@ const fs = require('fs');
 const User = require('../model/user');
 const RSA_PRIVATE_KEY = fs.readFileSync('./private.key');
 
-function errorhandler(err) {
+function errorhandler(err, req, res) {
   console.log(err)
   res.status(500).send({
     error: 'Something went wrong'
@@ -18,7 +18,7 @@ function authenticate(jwtBearerToken) {
 function login(req, res) {
     User.findOne({ email: req.body.email}, (err, user) => {
         if (err) {
-          errorhandler(err);
+          errorhandler(err, req, res);
           return;
         }
     
@@ -66,7 +66,7 @@ function register(req, res) {
     
       User.exists(emailOrUsername, (err, user) => {
         if(err) {
-            errorhandler(err);
+            errorhandler(err, req, res);
             return;
         }
         if(!Object.is(user, null)) {
@@ -81,7 +81,7 @@ function register(req, res) {
         
         newUser.save((err, User) => {
             if (err) {
-              errorhandler(err);
+              errorhandler(err, req, res);
               return;
             }
             console.log(User);
