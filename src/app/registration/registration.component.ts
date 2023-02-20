@@ -25,8 +25,8 @@ export class RegistrationComponent {
   register() {
     const val = this.form.value;
 
-    if (val.username && val.email && val.password && val.passwordRepeat) {
-      this.authService.register(val.username, val.email, val.password, val.passwordRepeat)
+    if (val.username && val.email && val.password) {
+      this.authService.register(val.username, val.email, val.password)
         .subscribe(() => {
           console.log("User is registered");
           this.router.navigateByUrl('/Dashboard');
