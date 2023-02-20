@@ -34,7 +34,7 @@ function login(req, res) {
     
           const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
-            expiresIn: "120",
+            expiresIn: "1d",
             subject: user.id
           });
           console.log(jwtBearerToken);
