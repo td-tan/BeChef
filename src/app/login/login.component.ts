@@ -32,8 +32,9 @@ export class LoginComponent {
           if (response['error']) {
             this.error = true;
             this.error_msg = response['error'];
+          } else {
+            this.router.navigateByUrl('/Dashboard');
           }
-          this.router.navigateByUrl('/Dashboard');
         });
     }
   }

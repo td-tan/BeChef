@@ -33,9 +33,9 @@ export class RegistrationComponent {
           if (response['error']) {
             this.error = true;
             this.error_msg = response['error'];
+          } else {
+            this.router.navigateByUrl('/Dashboard');
           }
-          console.log("User is registered");
-          this.router.navigateByUrl('/Dashboard');
         });
     }
   }
