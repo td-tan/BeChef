@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@import "colors"
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Roboto&display=swap')
+
 
 body
     font-family: 'Permanent Marker', cursive
@@ -18,11 +20,11 @@ form
         text-align: center
 
     fieldset
-        background-color: #F67280
+        background-color: $primary-color
         border-style: none
         border-radius: 25px
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4)
-        color: #355C7D
+        color: $secondary-color
         font-size: 25px
 
         .form-field
@@ -35,11 +37,11 @@ form
                 border: 2px solid #EEE
                 border-radius: 12px
                 border-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06)
-                color: #E84A5F
+                color: $primary-color
                 padding: 5px
 
             input:focus
-                outline-color: #ABE6CE
+                outline-color: $secondary-color
         
         .checkbox
             display: flex
@@ -55,20 +57,20 @@ form
         height: 50px
         cursor: pointer
         background-color: white
-        color: #F67280
+        color: $primary-color
         margin: 10px
         font-size: 30px
-        border: 2px solid #F67280
+        border: 2px solid $primary-color
         border-radius: 12px
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4)
 
     button:hover
-        background-color: #F67280
-        color: #355C7D
+        background-color: $primary-color
+        color: $secondary-color
     
     button:active
-        background-color: #355C7D
-        color: #F67280
+        background-color: $secondary-color
+        color: $primary-color
         border-style: none
 
 app-root
