@@ -34,4 +34,8 @@ export class AppComponent {
   isDashboardRoute() : Boolean {
     return this.router.url === '/dashboard';
   }
+
+  isProfileRoute() : Boolean {
+    return this.router.url === '/profile';
+  }
 }
