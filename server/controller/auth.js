@@ -104,12 +104,26 @@ function register(req, res) {
         newUser.email = req.body.email;
         newUser.hashPassword(req.body.password);
         
-        newUser.save((err, User) => {
+        newUser.save((err, user) => {
             if (err) {
               ErrorController.errorhandler(err, req, res);
               return;
             }
-            console.log(User);
+            console.log(user);
+
+            console.log(user.secret_key);
+            const jwtBearerToken = jwt.sign({secret_key: user.secret_key}, RSA_PRIVATE_KEY, {
+                algorithm: 'RS256',
+                expiresIn: "1d",
+                subject: user.id
+            });
+            console.log(jwtBearerToken);
+        
+            res.cookie("SESSIONID", jwtBearerToken, {
+                httpOnly: true, 
+                secure: true
+            });
+
             res.send({
               success: true
             });
