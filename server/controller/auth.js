@@ -40,7 +40,8 @@ function login(req, res) {
     
           res.cookie("SESSIONID", jwtBearerToken, {
             httpOnly: true, 
-            secure: true
+            secure: true,
+            overwrite: true
           });
           
           res.send({
@@ -121,7 +122,8 @@ function register(req, res) {
         
             res.cookie("SESSIONID", jwtBearerToken, {
                 httpOnly: true, 
-                secure: true
+                secure: true,
+                overwrite: true
             });
 
             res.send({
