@@ -18,6 +18,7 @@ function getUser(req, res) {
         res.send({
             error: 'Invalid Token'
         });
+        return;
     }
 
     User.findById(decoded['sub'], (err, user) => {
