@@ -59,6 +59,55 @@ function getUser(req, res) {
     });
 }
 
+async function getLeaderboard(req, res) {
+    if(!isLoggedIn(req.cookies)) {
+        res.send({
+            error: 'Invalid Token'
+        });
+        return;
+    }
+
+
+    const max = Number(req.query.max) || 10;
+
+    let leaderboard;
+    try {
+        leaderboard = await User.aggregate([
+            // Stage 0: Set to only return fields username and points
+            {
+                $project: {
+                    _id: 0,
+                    username: 1,
+                    points: 1
+                }
+            },
+            // Stage 1: Limit to 10 users
+            {
+                $limit: max
+            },
+            // Stage 2: Sort all matches user points descending
+            {
+                $sort: {
+                    points: -1
+                }
+            }
+        ]);
+    } catch (err) {
+        ErrorController.errorhandler(err, req, res);
+        return;
+    }
+
+    console.log(leaderboard);
+
+    res.send({
+        success: true,
+        body: {
+            leaderboard: leaderboard
+        }
+    });
+}
+
 module.exports = { 
-    getUser
+    getUser,
+    getLeaderboard
 };
