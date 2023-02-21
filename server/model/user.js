@@ -25,6 +25,11 @@ const UserSchema = mongoose.Schema({
     default: Date.now,
     required: true
   },
+  secret_key: {
+    type: String,
+    default: crypto.randomBytes(16).toString('Hex'),
+    required: true
+  },
   points: {
     type: Number,
     default: 0

@@ -11,8 +11,24 @@ function getUser(req, res) {
     try {
         const decoded = AuthController.authenticate(jwtBearerToken);
         console.log(decoded);
-        res.send({
-            success: true
+        
+        User.findById(decoded['sub'], (err, user) => {
+            if (err) {
+                ErrorController.errorhandler(err, req, res);
+                return;
+            }
+            if(Object.is(user, null)) {
+                throw "User with ID not found";
+            }
+            console.log(user.secret_key);
+
+            if(user.secret_key === decoded['secret_key']) {
+                console.log("Token valid");
+            }
+
+            res.send({
+                success: true
+            });
         });
     } catch (err) {
         console.error(err);

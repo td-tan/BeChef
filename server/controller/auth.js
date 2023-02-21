@@ -26,8 +26,11 @@ function login(req, res) {
     
         if (user.verifyPassword(req.body.password)) {
           console.log("MATCH");
-    
-          const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
+
+          // Use user secret key as part of jwt sign key
+          // After logout will invalidate token by changing secret key
+          console.log(user.secret_key);
+          const jwtBearerToken = jwt.sign({secret_key: user.secret_key}, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn: "1d",
             subject: user.id
