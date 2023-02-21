@@ -20,6 +20,11 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  last_login: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
   points: {
     type: Number,
     default: 0
