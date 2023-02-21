@@ -3,25 +3,34 @@ const User = require('../model/user');
 const AuthController = require('./auth');
 const ErrorController = require('./error');
 
-function getUser(req, res) {
-    if (!req.cookies) {
+function isLoggedIn(cookies) {
+    if (!cookies) {
         ErrorController.errorhandler(err);
-        return;
+        return false;
     }
-    const jwtBearerToken = req.cookies['SESSIONID'];
-    let decoded = '';
+    const jwtBearerToken = cookies['SESSIONID'];
+
     try {
-        decoded = AuthController.authenticate(jwtBearerToken);
+        const decoded = AuthController.authenticate(jwtBearerToken);
         console.log(decoded);
+        return decoded['sub'];
     } catch (err) {
         console.error(err);
+    }
+    return false;
+}
+
+function getUser(req, res) {
+    const id = isLoggedIn(req.cookies);
+
+    if(!id) {
         res.send({
             error: 'Invalid Token'
         });
         return;
     }
 
-    User.findById(decoded['sub'], (err, user) => {
+    User.findById(id, (err, user) => {
         if (err) {
             ErrorController.errorhandler(err, req, res);
             return;
