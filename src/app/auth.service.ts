@@ -20,4 +20,10 @@ export class AuthService {
       shareReplay()
     );
   }
+
+  authenticate() {
+    return this.http.get<any>('/api/user').pipe(
+      shareReplay()
+    );
+  }
 }

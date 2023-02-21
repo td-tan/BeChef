@@ -11,6 +11,9 @@ function getUser(req, res) {
     try {
         const decoded = AuthController.authenticate(jwtBearerToken);
         console.log(decoded);
+        res.send({
+            success: true
+        });
     } catch (err) {
         console.error(err);
         res.send({
