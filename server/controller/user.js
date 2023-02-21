@@ -6,6 +6,7 @@ const ErrorController = require('./error');
 function getUser(req, res) {
     if (!req.cookies) {
         ErrorController.errorhandler(err);
+        return;
     }
     const jwtBearerToken = req.cookies['SESSIONID'];
     try {
