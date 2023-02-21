@@ -3,7 +3,7 @@
   <nav>
     <a *ngIf="!isDashboardRoute()" [routerLink] = "['/login']" [ngClass]="{'active': isLoginRoute()}">Login</a>
     <a *ngIf="!isDashboardRoute()" [routerLink] = "['/register']" [ngClass]="{'active': isRegisterRoute()}">Register</a>
-    <button *ngIf="isDashboardRoute()" (click)="logout">Logout</button>
+    <button *ngIf="isDashboardRoute()" (click)="logout()">Logout</button>
   </nav>
 </header>
 <main>

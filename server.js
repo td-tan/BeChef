@@ -25,6 +25,7 @@ mongoose.connect(process.env.DB_CONN_URI + '/test')
 });
 
 app.post('/api/login', AuthController.login);
+app.get('/api/logout', AuthController.logout);
 app.post('/api/register', AuthController.register);
 app.get('/api/user', UserController.getUser);
 

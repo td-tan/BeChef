@@ -15,6 +15,12 @@ export class AuthService {
     );
   }
 
+  logout() {
+    return this.http.get<any>('/api/logout').pipe(
+      shareReplay()
+    );
+  }
+
   register(username:string, email:string, password:string) {
     return this.http.post<any>('/api/register', {username, email, password}).pipe(
       shareReplay()

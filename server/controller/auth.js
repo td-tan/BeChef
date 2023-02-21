@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const crypto = require('crypto');
 
 const User = require('../model/user');
 const ErrorController = require('./error');
@@ -54,6 +55,31 @@ function login(req, res) {
       });
 }
 
+async function logout(req, res) {
+    if (!req.cookies) {
+        ErrorController.errorhandler(err);
+        return;
+    }
+    const jwtBearerToken = req.cookies['SESSIONID'];
+    try {
+        const decoded = authenticate(jwtBearerToken);
+        
+        const user = await User.findOneAndUpdate(
+            { _id: decoded['sub'] }, 
+            { secret_key: crypto.randomBytes(16).toString('Hex')});
+        
+        console.log(user);
+        res.send({
+            success: true
+        });
+    } catch (err) {
+        console.error(err);
+        res.send({
+            error: 'Invalid Token'
+        });
+    }
+}
+
 function register(req, res) {
       const emailOrUsername = { 
         $or: [
@@ -94,6 +120,7 @@ function register(req, res) {
 
 module.exports = { 
     login, 
+    logout,
     register,
     authenticate
 };

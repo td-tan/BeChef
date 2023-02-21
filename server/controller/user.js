@@ -9,34 +9,40 @@ function getUser(req, res) {
         return;
     }
     const jwtBearerToken = req.cookies['SESSIONID'];
+    let decoded = '';
     try {
-        const decoded = AuthController.authenticate(jwtBearerToken);
+        decoded = AuthController.authenticate(jwtBearerToken);
         console.log(decoded);
-        
-        User.findById(decoded['sub'], (err, user) => {
-            if (err) {
-                ErrorController.errorhandler(err, req, res);
-                return;
-            }
-            if(Object.is(user, null)) {
-                throw "User with ID not found";
-            }
-            console.log(user.secret_key);
-
-            if(user.secret_key === decoded['secret_key']) {
-                console.log("Token valid");
-            }
-
-            res.send({
-                success: true
-            });
-        });
     } catch (err) {
         console.error(err);
         res.send({
             error: 'Invalid Token'
         });
     }
+
+    User.findById(decoded['sub'], (err, user) => {
+        if (err) {
+            ErrorController.errorhandler(err, req, res);
+            return;
+        }
+        if(Object.is(user, null)) {
+            res.send({
+                error: "User not found"
+            });
+        }
+        console.log(user.secret_key);
+
+        if(user.secret_key !== decoded['secret_key']) {
+            res.send({
+                error: "Session dead"
+            });
+            return;
+        }
+
+        res.send({
+            success: true
+        });
+    });
 }
 
 module.exports = { 
