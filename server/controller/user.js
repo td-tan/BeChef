@@ -41,7 +41,11 @@ function getUser(req, res) {
         }
 
         res.send({
-            success: true
+            success: true,
+            body: {
+                username: user.username,
+                points: user.points 
+            }
         });
     });
 }
