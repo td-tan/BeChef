@@ -12,6 +12,10 @@ export class DashboardComponent {
     username: String = '';
     leaderboard: Array<any> = [];
 
+    leaderboardActive: Boolean = true;
+    recipesActive: Boolean = false;
+    teamActive: Boolean = false
+
     constructor(private router:Router,
         private authService:AuthService,
         private http:HttpClient) {}
