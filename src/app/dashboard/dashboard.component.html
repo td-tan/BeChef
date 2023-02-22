@@ -1,1 +1,18 @@
 <p>Welcome, {{username}}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of leaderboard">
+            <td></td>
+            <td>{{user.username}}</td>
+            <td>{{user.points}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,4 +1,5 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
@@ -9,10 +10,11 @@ import { AuthService } from '../auth.service';
 })
 export class DashboardComponent {
     username: String = '';
+    leaderboard: Array<any> = [];
 
     constructor(private router:Router,
         private authService:AuthService,
-        private renderer: Renderer2) {}
+        private http:HttpClient) {}
     
     ngOnInit() {
         this.authService.authenticate().subscribe((response: any) => {
@@ -21,6 +23,13 @@ export class DashboardComponent {
             }
             this.username = response.body.username;
             console.log(response);
+        });
+
+        this.http.get<any>('/api/leaderboard').subscribe((response: any) => {
+            if(response['success']) {
+                this.leaderboard = response.body.leaderboard;
+                console.log(this.leaderboard);
+            }
         });
     }
 }
