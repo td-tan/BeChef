@@ -13,7 +13,7 @@ function isLoggedIn(cookies) {
     try {
         const decoded = AuthController.authenticate(jwtBearerToken);
         console.log(decoded);
-        return decoded['sub'];
+        return decoded;
     } catch (err) {
         console.error(err);
     }
@@ -21,16 +21,16 @@ function isLoggedIn(cookies) {
 }
 
 function getUser(req, res) {
-    const id = isLoggedIn(req.cookies);
+    const decoded = isLoggedIn(req.cookies);
 
-    if(!id) {
+    if(!decoded) {
         res.send({
             error: 'Invalid Token'
         });
         return;
     }
 
-    User.findById(id, (err, user) => {
+    User.findById(decoded['sub'], (err, user) => {
         if (err) {
             ErrorController.errorhandler(err, req, res);
             return;
