@@ -1,8 +1,8 @@
 <div class="banner"><h2>Hello {{username}}!</h2></div>
 <div class="subnav">
-    <section [ngClass]="{'active': leaderboardActive}">Leaderboard</section>
-    <section [ngClass]="{'active': recipesActive}">Recipes</section>
-    <section [ngClass]="{'active': teamActive}">Team</section>
+    <section (click)="showLeaderboard()" [ngClass]="{'active': leaderboardActive}">Leaderboard</section>
+    <section (click)="showRecipes()" [ngClass]="{'active': recipesActive}">Recipes</section>
+    <section (click)="showTeam()" [ngClass]="{'active': teamActive}">Team</section>
 </div>
 <table>
     <thead>

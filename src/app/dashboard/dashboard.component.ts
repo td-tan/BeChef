@@ -29,11 +29,31 @@ export class DashboardComponent {
             console.log(response);
         });
 
+        this.showLeaderboard();
+    }
+
+    showLeaderboard() {
+        this.recipesActive = false;
+        this.teamActive = false;
+        this.leaderboardActive = true;
+
         this.http.get<any>('/api/leaderboard').subscribe((response: any) => {
             if(response['success']) {
                 this.leaderboard = response.body.leaderboard;
                 console.log(this.leaderboard);
             }
         });
+    }
+
+    showRecipes() {
+        this.recipesActive = true;
+        this.teamActive = false;
+        this.leaderboardActive = false;
+    }
+
+    showTeam() {
+        this.recipesActive = false;
+        this.teamActive = true;
+        this.leaderboardActive = false;
     }
 }
