@@ -7,7 +7,14 @@ const RecipeSchema = mongoose.Schema({
     required: true
   },
   duration: {
-    type: Number
+    value: {
+      type: Number,
+      required: true
+    },
+    unit: {
+      type: String,
+      required: true
+    }
   },
   difficulty: {
     type: Number
