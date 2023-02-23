@@ -9,9 +9,17 @@ const RecipeSchema = mongoose.Schema({
   duration: {
     type: Number
   },
+  difficulty: {
+    type: Number
+  },
   likes: {
     type: Number,
     default: 0
+  },
+  visibility: {
+    type: Boolean,
+    default: false,
+    required: true
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
