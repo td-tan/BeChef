@@ -4,7 +4,7 @@
     <section (click)="showRecipes()" [ngClass]="{'active': recipesActive}">Recipes</section>
     <section (click)="showTeam()" [ngClass]="{'active': teamActive}">Team</section>
 </div>
-<table>
+<table *ngIf="leaderboardActive">
     <thead>
         <tr>
             <th>Rank</th>
