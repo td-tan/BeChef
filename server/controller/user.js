@@ -1,4 +1,6 @@
+const mongoose = require('mongoose');
 const User = require('../model/user');
+const Recipe = require('../model/recipe');
 
 const AuthController = require('./auth');
 const ErrorController = require('./error');
@@ -107,7 +109,38 @@ async function getLeaderboard(req, res) {
     });
 }
 
+function getRecipes(req, res) {
+    const decoded = isLoggedIn(req.cookies);
+
+    if(!decoded) {
+        res.send({
+            error: 'Invalid Token'
+        });
+        return;
+    }
+
+    Recipe.find({'createdBy.$id': mongoose.Types.ObjectId(decoded['sub'])}, (err, recipes) => {
+        if (err) {
+            ErrorController.errorhandler(err, req, res);
+            return;
+        }
+        if(recipes.length === 0) {
+            res.send({
+                error: "Recipes not found"
+            });
+            return;
+        }
+        console.log(recipes);
+        res.send({
+            success: true,
+            body: recipes
+        });
+    });
+
+}
+
 module.exports = { 
     getUser,
-    getLeaderboard
+    getLeaderboard,
+    getRecipes
 };

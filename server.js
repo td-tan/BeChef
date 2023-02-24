@@ -29,6 +29,7 @@ app.get('/api/logout', AuthController.logout);
 app.post('/api/register', AuthController.register);
 app.get('/api/user', UserController.getUser);
 app.get('/api/leaderboard', UserController.getLeaderboard);
+app.get('/api/recipes', UserController.getRecipes);
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
