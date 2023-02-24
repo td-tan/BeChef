@@ -125,8 +125,28 @@ async function getRecipes(req, res) {
         let recipes;
         try {
             recipes = await Recipe.aggregate([
-                // Stage 0: Set to only return fields 
-                // title, difficulty, duration, likes and visibility
+                // Stage 0: Get Creator for recipe
+                {
+                    $lookup: {
+                        from: 'users',
+                        localField: 'createdBy.$id',
+                        foreignField: '_id',
+                        as: 'creator'
+                    }
+                },
+                // Stage 1: Decompose
+                {
+                    $unwind: '$creator'
+                },
+                // Stage 2: Only match public recipes
+                {
+                    $match: {
+                        visibility: true
+                    }
+                },
+                // Stage 3: Set to only return fields 
+                // title, difficulty, duration, likes, 
+                // visibility and Creator
                 {
                     $project: {
                         _id: 0,
@@ -134,15 +154,9 @@ async function getRecipes(req, res) {
                         difficulty: 1,
                         duration: 1,
                         likes: 1,
-                        visibility: 1
+                        'creator.username': 1
                     }
                 },
-                // Stage 1: Only match public recipes
-                {
-                    $match: {
-                        visibility: true
-                    }
-                }
             ]);
         } catch (err) {
             ErrorController.errorhandler(err, req, res);
