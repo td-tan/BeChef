@@ -41,6 +41,7 @@ function getUser(req, res) {
             res.send({
                 error: "User not found"
             });
+            return;
         }
         console.log(user.secret_key);
 
@@ -133,7 +134,9 @@ function getRecipes(req, res) {
         console.log(recipes);
         res.send({
             success: true,
-            body: recipes
+            body: {
+                recipes: recipes
+            }
         });
     });
 

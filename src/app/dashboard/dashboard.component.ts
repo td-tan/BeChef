@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
 export class DashboardComponent {
     username: String = '';
     leaderboard: Array<any> = [];
+    recipes: Array<any> = [];
 
     leaderboardActive: Boolean = true;
     recipesActive: Boolean = false;
@@ -49,6 +50,13 @@ export class DashboardComponent {
         this.recipesActive = true;
         this.teamActive = false;
         this.leaderboardActive = false;
+
+        this.http.get<any>('/api/recipes').subscribe((response: any) => {
+            if(response['success']) {
+                this.recipes = response.body.recipes;
+                console.log(this.recipes);
+            }
+        });
     }
 
     showTeam() {

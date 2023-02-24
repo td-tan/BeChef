@@ -20,3 +20,24 @@
         </tr>
     </tbody>
 </table>
+
+<table *ngIf="recipesActive">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Difficulty</th>
+            <th>Duration</th>
+            <th>Likes</th>
+            <th>Visibility</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let recipe of recipes">
+            <td>{{recipe.title}}</td>
+            <td>{{recipe.difficulty}}</td>
+            <td>{{recipe.duration.value}} {{recipe.duration.unit}}</td>
+            <td>{{recipe.likes}}</td>
+            <td>{{recipe.visibility}}</td>
+        </tr>
+    </tbody>
+</table>
