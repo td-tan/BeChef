@@ -35,7 +35,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let recipe of recipes">
+        <tr *ngFor="let recipe of recipes" id="{{recipe._id}}" class="row" (click)="openRecipe()">
             <td>{{recipe.title}}</td>
             <td>{{recipe.difficulty}}</td>
             <td>{{recipe.duration.value}} {{recipe.duration.unit}}</td>

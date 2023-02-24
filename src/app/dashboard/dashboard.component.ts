@@ -90,6 +90,10 @@ export class DashboardComponent {
         });
     }
 
+    openRecipe() {
+        
+    }
+
     showTeam() {
         this.recipesActive = false;
         this.teamActive = true;
