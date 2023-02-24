@@ -209,9 +209,9 @@ async function getRecipeContent(req, res) {
     const rid = String(req.params.recipe_id) || "";
     console.log(rid);
     
-    let recipeContent;
+    let recipeContents;
     try {
-        recipeContent = await RecipeContent.aggregate([
+        recipeContents = await RecipeContent.aggregate([
             // Stage 0: Match recipe
             {
                 $match: {
@@ -225,6 +225,9 @@ async function getRecipeContent(req, res) {
                     foreignField: '_id',
                     as: 'recipe'
                 }
+            },
+            {
+                $unwind: '$recipe'
             },
             {
                 $project: {
@@ -243,12 +246,12 @@ async function getRecipeContent(req, res) {
         ErrorController.errorhandler(err, req, res);
         return;
     }
-    console.log(recipeContent);
+    console.log(recipeContents);
 
     res.send({
         success: true,
         body: {
-            recipeContent: recipeContent
+            recipeContents: recipeContents
         }
     });
 
