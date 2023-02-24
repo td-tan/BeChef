@@ -21,6 +21,8 @@
     </tbody>
 </table>
 
+<button *ngIf="recipesActive" [ngClass]="{'activeBtn': recipesOnlyUserActive}">My Recipes</button>
+<button *ngIf="recipesActive" [ngClass]="{'activeBtn': recipesAllActive}">Show All</button>
 <table *ngIf="recipesActive">
     <thead>
         <tr>

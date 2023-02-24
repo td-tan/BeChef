@@ -15,6 +15,8 @@ export class DashboardComponent {
 
     leaderboardActive: Boolean = true;
     recipesActive: Boolean = false;
+    recipesAllActive: Boolean = false;
+    recipesOnlyUserActive: Boolean = false;
     teamActive: Boolean = false
 
     constructor(private router:Router,
@@ -50,6 +52,9 @@ export class DashboardComponent {
         this.recipesActive = true;
         this.teamActive = false;
         this.leaderboardActive = false;
+
+        this.recipesAllActive = false;
+        this.recipesOnlyUserActive = true;
 
         this.http.get<any>('/api/recipes').subscribe((response: any) => {
             if(response['success']) {
