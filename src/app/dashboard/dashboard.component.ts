@@ -65,6 +65,8 @@ export class DashboardComponent {
             if(response['success']) {
                 this.recipes = response.body.recipes;
                 console.log(this.recipes);
+            } else {
+                this.recipes = [];
             }
         });
     }
@@ -82,6 +84,8 @@ export class DashboardComponent {
             if(response['success']) {
                 this.recipes = response.body.recipes;
                 console.log(this.recipes);
+            } else {
+                this.recipes = [];
             }
         });
     }
