@@ -30,7 +30,8 @@
             <th>Difficulty</th>
             <th>Duration</th>
             <th>Likes</th>
-            <th>Creator</th>
+            <th *ngIf="recipesOnlyUserActive">Public</th>
+            <th *ngIf="recipesAllActive">Creator</th>
         </tr>
     </thead>
     <tbody>
@@ -39,7 +40,8 @@
             <td>{{recipe.difficulty}}</td>
             <td>{{recipe.duration.value}} {{recipe.duration.unit}}</td>
             <td>{{recipe.likes}}</td>
-            <td>{{recipe.creator.username}}</td>
+            <td *ngIf="recipesOnlyUserActive">{{recipe.visbility}}</td>
+            <td *ngIf="recipesAllActive">{{recipe.creator.username}}</td>
         </tr>
     </tbody>
 </table>
