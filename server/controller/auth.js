@@ -10,7 +10,19 @@ function authenticate(jwtBearerToken) {
   return jwt.verify(jwtBearerToken, RSA_PRIVATE_KEY);
 }
 
+function validateInputFormat(input, type) {
+  if (typeof input !== type) {
+    res.send({
+      error: 'User does exists'
+    });
+    return;
+  }
+}
+
 function login(req, res) {
+    validateInputFormat(req.body.email, String);
+    validateInputFormat(req.body.password, String);
+    
     User.findOne({ email: req.body.email}, (err, user) => {
         if (err) {
           ErrorController.errorhandler(err, req, res);
@@ -52,6 +64,10 @@ function login(req, res) {
 }
 
 function register(req, res) {
+      validateInputFormat(req.body.username, String);
+      validateInputFormat(req.body.email, String);
+      validateInputFormat(req.body.password, String);
+
       const emailOrUsername = { 
         $or: [
         {email: req.body.email}, 
