@@ -53,10 +53,32 @@ export class DashboardComponent {
         this.teamActive = false;
         this.leaderboardActive = false;
 
+        this.showMyRecipes();
+    }
+
+
+    showMyRecipes() {
         this.recipesAllActive = false;
         this.recipesOnlyUserActive = true;
 
         this.http.get<any>('/api/recipes').subscribe((response: any) => {
+            if(response['success']) {
+                this.recipes = response.body.recipes;
+                console.log(this.recipes);
+            }
+        });
+    }
+
+    showAllRecipes() {
+        this.recipesAllActive = true;
+        this.recipesOnlyUserActive = false;
+
+        this.http.get<any>('/api/recipes', { 
+            params: 
+            {
+                all: true
+            }
+        }).subscribe((response: any) => {
             if(response['success']) {
                 this.recipes = response.body.recipes;
                 console.log(this.recipes);
