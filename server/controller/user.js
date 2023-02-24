@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../model/user');
 const Recipe = require('../model/recipe');
+const RecipeContent = require('../model/recipeContent');
 
 const AuthController = require('./auth');
 const ErrorController = require('./error');
@@ -149,7 +150,7 @@ async function getRecipes(req, res) {
                 // visibility and Creator
                 {
                     $project: {
-                        _id: 0,
+                        _id: 1,
                         title: 1,
                         difficulty: 1,
                         duration: 1,
@@ -195,8 +196,96 @@ async function getRecipes(req, res) {
 
 }
 
+async function getRecipeContent(req, res) {
+    const decoded = isLoggedIn(req.cookies);
+
+    if(!decoded) {
+        res.send({
+            error: 'Invalid Token'
+        });
+        return;
+    }
+
+    const rid = String(req.params.recipe_id) || "";
+    console.log(rid);
+    
+    let recipeContent;
+    try {
+        recipeContent = await RecipeContent.aggregate([
+            // Stage 0: Match recipe
+            {
+                $match: {
+                    'recipeOf.$id': mongoose.Types.ObjectId(rid)
+                }
+            },
+            {
+                $unwind: "$ingredients"
+            },
+            {
+                $lookup: {
+                    from: "ingredients",
+                    localField: "ingredients.ingredient.$id",
+                    foreignField: "_id",
+                    as: "ingredient"
+                }
+            },
+            {
+                $unwind: "$ingredient"
+            },
+            {
+                $group: {
+                    _id: "$ingredient._id",
+                    name: { $first: "$ingredient.name" },
+                    amounts: {
+                        $push: {
+                            value: "$ingredients.amount.value",
+                            unit: "$ingredients.amount.unit"
+                        }
+                    },
+                    recipe: { $first: "$recipeOf.$id" },
+                    instructionText: { $first: "$instructionText" }
+                }
+            },
+            {
+                $lookup: {
+                    from: "recipes",
+                    localField: "recipe",
+                    foreignField: "_id",
+                    as: "recipe"
+                }
+            },
+            {
+                $unwind: "$recipe"
+            },
+            {
+                $project: {
+                    _id: 0,
+                    name: 1,
+                    amounts: 1,
+                    instructionText: 1,
+                    "recipe.title": 1
+                }
+            }
+              
+        ]);
+    } catch (err) {
+        ErrorController.errorhandler(err, req, res);
+        return;
+    }
+    console.log(recipeContent);
+
+    res.send({
+        success: true,
+        body: {
+            recipeContent: recipeContent
+        }
+    });
+
+}
+
 module.exports = { 
     getUser,
     getLeaderboard,
-    getRecipes
+    getRecipes,
+    getRecipeContent
 };

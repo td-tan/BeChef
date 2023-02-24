@@ -11,13 +11,22 @@ const RecipeContentSchema = mongoose.Schema({
             type: mongoose.ObjectId,
             ref: 'Ingredient'
         },
-        amount: Number
+        amount: {
+          value: {
+            type: Number,
+            required: true
+          },
+          unit: {
+            type: String,
+            required: true
+          }
+        }
     }
   ],
   instructionText: {
-    type: Text,
+    type: String,
     required: true
   }
 });
 
-module.exports = mongoose.model("RecipeContent", RecipeContentSchema);
+module.exports = mongoose.model("RecipeContent", RecipeContentSchema, "recipeContents");
