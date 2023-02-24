@@ -110,12 +110,51 @@ async function getLeaderboard(req, res) {
     });
 }
 
-function getRecipes(req, res) {
+async function getRecipes(req, res) {
     const decoded = isLoggedIn(req.cookies);
 
     if(!decoded) {
         res.send({
             error: 'Invalid Token'
+        });
+        return;
+    }
+
+    if(req.query.all)
+    {
+        let recipes;
+        try {
+            recipes = await Recipe.aggregate([
+                // Stage 0: Set to only return fields 
+                // title, difficulty, duration, likes and visibility
+                {
+                    $project: {
+                        _id: 0,
+                        title: 1,
+                        difficulty: 1,
+                        duration: 1,
+                        likes: 1,
+                        visibility: 1
+                    }
+                },
+                // Stage 1: Only match public recipes
+                {
+                    $match: {
+                        visibility: true
+                    }
+                }
+            ]);
+        } catch (err) {
+            ErrorController.errorhandler(err, req, res);
+            return;
+        }
+        console.log(recipes);
+
+        res.send({
+            success: true,
+            body: {
+                recipes: recipes
+            }
         });
         return;
     }
