@@ -219,51 +219,22 @@ async function getRecipeContent(req, res) {
                 }
             },
             {
-                $unwind: "$ingredients"
-            },
-            {
                 $lookup: {
-                    from: "ingredients",
-                    localField: "ingredients.ingredient.$id",
-                    foreignField: "_id",
-                    as: "ingredient"
+                    from: 'recipes',
+                    localField: 'recipeOf.$id',
+                    foreignField: '_id',
+                    as: 'recipe'
                 }
-            },
-            {
-                $unwind: "$ingredient"
-            },
-            {
-                $group: {
-                    _id: "$ingredient._id",
-                    name: { $first: "$ingredient.name" },
-                    amounts: {
-                        $push: {
-                            value: "$ingredients.amount.value",
-                            unit: "$ingredients.amount.unit"
-                        }
-                    },
-                    recipe: { $first: "$recipeOf.$id" },
-                    instructionText: { $first: "$instructionText" }
-                }
-            },
-            {
-                $lookup: {
-                    from: "recipes",
-                    localField: "recipe",
-                    foreignField: "_id",
-                    as: "recipe"
-                }
-            },
-            {
-                $unwind: "$recipe"
             },
             {
                 $project: {
-                    _id: 0,
-                    name: 1,
-                    amounts: 1,
+                    _id: 1,
+                    ingredients: 1,
                     instructionText: 1,
-                    "recipe.title": 1
+                    'recipe.title': 1,
+                    'recipe.duration': 1,
+                    'recipe.difficulty': 1,
+                    'recipe.visibility': 1
                 }
             }
               
