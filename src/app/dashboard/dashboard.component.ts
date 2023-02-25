@@ -17,7 +17,10 @@ export class DashboardComponent {
     recipesActive: Boolean = false;
     recipesAllActive: Boolean = false;
     recipesOnlyUserActive: Boolean = false;
-    teamActive: Boolean = false
+    teamActive: Boolean = false;
+
+    view: Boolean = true;
+    recipeContents: Array<any> = [];
 
     constructor(private router:Router,
         private authService:AuthService,
@@ -36,6 +39,7 @@ export class DashboardComponent {
     }
 
     showLeaderboard() {
+        this.view = true;
         this.recipesActive = false;
         this.teamActive = false;
         this.leaderboardActive = true;
@@ -49,6 +53,7 @@ export class DashboardComponent {
     }
 
     showRecipes() {
+        this.view = true;
         this.recipesActive = true;
         this.teamActive = false;
         this.leaderboardActive = false;
@@ -90,11 +95,31 @@ export class DashboardComponent {
         });
     }
 
-    openRecipe() {
-        
+    openRecipe(recipe_id: String) {
+        this.view = false;
+        console.log(recipe_id);
+
+        this.http.get<any>(`/api/recipe/${recipe_id}`).subscribe((response: any) => {
+            if(response['success']) {
+                this.recipeContents = response.body.recipeContents;
+                console.log(this.recipeContents);
+            } else {
+                this.recipeContents = [];
+            }
+        });
+    }
+
+    back() {
+        this.view = true;
+        if(this.recipesAllActive) {
+            this.showAllRecipes();
+        } else {
+            this.showMyRecipes();
+        }
     }
 
     showTeam() {
+        this.view = true;
         this.recipesActive = false;
         this.teamActive = true;
         this.leaderboardActive = false;

@@ -21,27 +21,47 @@
     </tbody>
 </table>
 
-<button (click)="showMyRecipes()" *ngIf="recipesActive" [ngClass]="{'activeBtn': recipesOnlyUserActive}">My Recipes</button>
-<button (click)="showAllRecipes()" *ngIf="recipesActive" [ngClass]="{'activeBtn': recipesAllActive}">Show All</button>
-<table *ngIf="recipesActive">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Difficulty</th>
-            <th>Duration</th>
-            <th>Likes</th>
-            <th *ngIf="recipesOnlyUserActive">Public</th>
-            <th *ngIf="recipesAllActive">Creator</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let recipe of recipes" id="{{recipe._id}}" class="row" (click)="openRecipe()">
-            <td>{{recipe.title}}</td>
-            <td>{{recipe.difficulty}}</td>
-            <td>{{recipe.duration.value}} {{recipe.duration.unit}}</td>
-            <td>{{recipe.likes}}</td>
-            <td *ngIf="recipesOnlyUserActive">{{recipe.visibility}}</td>
-            <td *ngIf="recipesAllActive">{{recipe.creator.username}}</td>
-        </tr>
-    </tbody>
-</table>
+<div *ngIf="view">
+    <button (click)="showMyRecipes()" *ngIf="recipesActive" [ngClass]="{'activeBtn': recipesOnlyUserActive}">My Recipes</button>
+    <button (click)="showAllRecipes()" *ngIf="recipesActive" [ngClass]="{'activeBtn': recipesAllActive}">Show All</button>
+    <table *ngIf="recipesActive">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Difficulty</th>
+                <th>Duration</th>
+                <th>Likes</th>
+                <th *ngIf="recipesOnlyUserActive">Public</th>
+                <th *ngIf="recipesAllActive">Creator</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let recipe of recipes" class="row" (click)="openRecipe(recipe._id)">
+                <td>{{recipe.title}}</td>
+                <td>{{recipe.difficulty}}</td>
+                <td>{{recipe.duration.value}} {{recipe.duration.unit}}</td>
+                <td>{{recipe.likes}}</td>
+                <td *ngIf="recipesOnlyUserActive">{{recipe.visibility}}</td>
+                <td *ngIf="recipesAllActive">{{recipe.creator.username}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="!view">
+    <button (click)="back()">Go Back</button>
+    <div *ngFor="let content of recipeContents" class="recipeContent">
+        <h2>Title: {{content.recipe.title}}</h2>
+        <div>Duration: {{content.recipe.duration.value}} {{content.recipe.duration.unit}}</div>
+        <div>Difficulty: {{content.recipe.difficulty}}</div>
+        <div>Public: {{content.recipe.visibility}}</div>
+        <h3>Ingredients</h3>
+        <ul>
+            <li *ngFor="let item of content.ingredients">
+                {{item.ingredient.name}} {{item.ingredient.amount.value}} {{item.ingredient.amount.unit}}
+            </li>
+        </ul>
+        <h3>Instructions</h3>
+        <p>{{content.instructionText}}</p>
+    </div>
+</div>
