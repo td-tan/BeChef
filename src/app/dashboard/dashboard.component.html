@@ -52,16 +52,18 @@
     <button (click)="back()">Go Back</button>
     <div *ngFor="let content of recipeContents" class="recipeContent">
         <h2>Title: {{content.recipe.title}}</h2>
-        <div>Duration: {{content.recipe.duration.value}} {{content.recipe.duration.unit}}</div>
-        <div>Difficulty: {{content.recipe.difficulty}}</div>
-        <div>Public: {{content.recipe.visibility}}</div>
+        <ul class="recipeInfo card">
+            <li>Duration: {{content.recipe.duration.value}} {{content.recipe.duration.unit}}</li>
+            <li>Difficulty: {{content.recipe.difficulty}}</li>
+            <li>Public: {{content.recipe.visibility}}</li>
+        </ul>
         <h3>Ingredients</h3>
-        <ul>
+        <ul class="card">
             <li *ngFor="let item of content.ingredients">
                 {{item.ingredient.name}} {{item.ingredient.amount.value}} {{item.ingredient.amount.unit}}
             </li>
         </ul>
         <h3>Instructions</h3>
-        <p>{{content.instructionText}}</p>
+        <p class="card">{{content.instructionText}}</p>
     </div>
 </div>
