@@ -6,65 +6,52 @@ const RecipeContent = require('../model/recipeContent');
 const AuthController = require('./auth');
 const ErrorController = require('./error');
 
-function isLoggedIn(cookies) {
+async function isLoggedIn(cookies) {
     if (!cookies) {
         ErrorController.errorhandler(err);
         return false;
     }
     const jwtBearerToken = cookies['SESSIONID'];
-
+    let decoded;
     try {
-        const decoded = AuthController.authenticate(jwtBearerToken);
+        decoded = AuthController.authenticate(jwtBearerToken);
         console.log(decoded);
-        return decoded;
     } catch (err) {
         console.error(err);
+        return false;
     }
-    return false;
+
+    const user = await User.findById(decoded['sub']).exec();
+
+    if(user.secret_key !== decoded['secret_key']) {
+        return false;
+    }
+
+    return decoded;
 }
 
-function getUser(req, res) {
-    const decoded = isLoggedIn(req.cookies);
-
+async function getUser(req, res) {
+    const decoded = await isLoggedIn(req.cookies);
     if(!decoded) {
         res.send({
-            error: 'Invalid Token'
+            error: 'Invalid Token.'
         });
         return;
     }
 
-    User.findById(decoded['sub'], (err, user) => {
-        if (err) {
-            ErrorController.errorhandler(err, req, res);
-            return;
-        }
-        if(Object.is(user, null)) {
-            res.send({
-                error: "User not found"
-            });
-            return;
-        }
-        console.log(user.secret_key);
+    const user = await User.findById(decoded['sub']);
 
-        if(user.secret_key !== decoded['secret_key']) {
-            res.send({
-                error: "Session dead"
-            });
-            return;
+    res.send({
+        success: true,
+        body: {
+            username: user.username,
+            points: user.points 
         }
-
-        res.send({
-            success: true,
-            body: {
-                username: user.username,
-                points: user.points 
-            }
-        });
     });
 }
 
 async function getLeaderboard(req, res) {
-    if(!isLoggedIn(req.cookies)) {
+    if(!await isLoggedIn(req.cookies)) {
         res.send({
             error: 'Invalid Token'
         });
@@ -112,7 +99,7 @@ async function getLeaderboard(req, res) {
 }
 
 async function getRecipes(req, res) {
-    const decoded = isLoggedIn(req.cookies);
+    const decoded = await isLoggedIn(req.cookies);
 
     if(!decoded) {
         res.send({
@@ -197,7 +184,7 @@ async function getRecipes(req, res) {
 }
 
 async function getRecipeContent(req, res) {
-    const decoded = isLoggedIn(req.cookies);
+    const decoded = await isLoggedIn(req.cookies);
 
     if(!decoded) {
         res.send({
