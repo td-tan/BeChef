@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!viewContent">
     <button (click)="showMyRecipes()" [ngClass]="{'activeBtn': recipesOnlyUserActive}">My Recipes</button>
     <button (click)="showAllRecipes()" [ngClass]="{'activeBtn': recipesAllActive}">Show All</button>
     <table>
@@ -24,30 +24,4 @@
         </tbody>
     </table>
 </div>
-
-
-<div *ngIf="viewContent">
-    <button (click)="back()">Go Back</button>
-    <div *ngFor="let content of recipeContents" class="recipeContent">
-        <div class="recipeInfo card">
-            <h3>{{content.recipe.title}}</h3>
-            <ul>
-                <li>Duration: {{content.recipe.duration.value}} {{content.recipe.duration.unit}}</li>
-                <li>Difficulty: {{content.recipe.difficulty}}</li>
-                <li>Public: {{content.recipe.visibility}}</li>
-            </ul>
-        </div> 
-        <div class="card">
-            <h3>Ingredients</h3>
-            <ul>
-                <li *ngFor="let item of content.ingredients">
-                    {{item.ingredient.name}} {{item.ingredient.amount.value}} {{item.ingredient.amount.unit}}
-                </li>
-            </ul>
-        </div>
-        <div class="card">
-            <h3>Instructions</h3>
-            <p>{{content.instructionText}}</p>
-        </div>
-    </div>
-</div>
+<router-outlet></router-outlet>

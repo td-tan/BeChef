@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LeaderboardComponent } from './dashboard/leaderboard/leaderboard.component';
 import { RecipesComponent } from './dashboard/recipes/recipes.component';
 import { TeamComponent } from './dashboard/team/team.component';
+import { RecipeContentComponent } from './dashboard/recipes/recipe-content/recipe-content.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -19,7 +20,13 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: 'leaderboard', component: LeaderboardComponent },
-      { path: 'recipes', component: RecipesComponent },
+      { 
+        path: 'recipes', 
+        component: RecipesComponent,
+        children: [
+          { path: ':id', component: RecipeContentComponent }
+        ]
+      },
       { path: 'team', component: TeamComponent },
     ]
   }
@@ -33,7 +40,8 @@ const routes: Routes = [
     DashboardComponent,
     LeaderboardComponent,
     RecipesComponent,
-    TeamComponent
+    TeamComponent,
+    RecipeContentComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipes',
@@ -8,16 +9,15 @@ import { Component } from '@angular/core';
 })
 export class RecipesComponent {
     recipes: Array<any> = [];
-    recipeContents: Array<any> = [];
 
     recipesAllActive: Boolean = false;
     recipesOnlyUserActive: Boolean = true;
 
     viewContent: Boolean = false;
-
     
 
-    constructor(private http:HttpClient) {}
+    constructor(private http:HttpClient,
+                private router:Router) {}
 
     ngOnInit() {
         this.showMyRecipes();
@@ -58,25 +58,7 @@ export class RecipesComponent {
     }
 
     openRecipe(recipe_id: String) {
-        this.viewContent = false;
-        console.log(recipe_id);
-
-        this.http.get<any>(`/api/recipe/${recipe_id}`).subscribe((response: any) => {
-            if(response['success']) {
-                this.recipeContents = response.body.recipeContents;
-                console.log(this.recipeContents);
-            } else {
-                this.recipeContents = [];
-            }
-        });
-    }
-
-    back() {
         this.viewContent = true;
-        if(this.recipesAllActive) {
-            this.showAllRecipes();
-        } else {
-            this.showMyRecipes();
-        }
+        this.router.navigateByUrl(`/dashboard/recipes/${recipe_id}`);
     }
 }
