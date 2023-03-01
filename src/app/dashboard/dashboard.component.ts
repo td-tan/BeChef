@@ -28,11 +28,11 @@ export class DashboardComponent {
     }
 
     isRouteLeaderboard() {
-        this.router.url === '/dashboard/leaderboard';
+        return this.router.url === '/dashboard/leaderboard';
     }
 
     isRouteRecipes() {
-        this.router.url === '/dashboard/recipes';
+        return this.router.url === '/dashboard/recipes';
     }
 
     showTeam() {
