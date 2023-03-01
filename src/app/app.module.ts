@@ -9,6 +9,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LeaderboardComponent } from './dashboard/leaderboard/leaderboard.component';
 import { RecipesComponent } from './dashboard/recipes/recipes.component';
+import { TeamComponent } from './dashboard/team/team.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
     children: [
       { path: 'leaderboard', component: LeaderboardComponent },
       { path: 'recipes', component: RecipesComponent },
+      { path: 'team', component: TeamComponent },
     ]
   }
 ];
@@ -30,7 +32,8 @@ const routes: Routes = [
     RegistrationComponent,
     DashboardComponent,
     LeaderboardComponent,
-    RecipesComponent
+    RecipesComponent,
+    TeamComponent
   ],
   imports: [
     BrowserModule,

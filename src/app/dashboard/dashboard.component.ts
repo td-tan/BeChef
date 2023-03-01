@@ -11,9 +11,9 @@ import { AuthService } from '../auth.service';
 export class DashboardComponent {
     username: String = '';
 
-    constructor(private router:Router,
-        private authService:AuthService,
-        private http:HttpClient) {}
+    constructor(
+        private router:Router,
+        private authService:AuthService) {}
     
     ngOnInit() {
         this.authService.authenticate().subscribe((response: any) => {
@@ -35,7 +35,7 @@ export class DashboardComponent {
         return this.router.url === '/dashboard/recipes';
     }
 
-    showTeam() {
-        
+    isRouteTeam() {
+        return this.router.url === '/dashboard/team';
     }
 }
