@@ -32,7 +32,10 @@ export class AppComponent {
   }
 
   isDashboardRoute() : Boolean {
-    return this.router.url === '/dashboard';
+    return (this.router.url === '/dashboard' || 
+        this.router.url === '/dashboard/leaderboard' || 
+        this.router.url === '/dashboard/recipes' || 
+        this.router.url === '/dashboard/team');
   }
 
   isProfileRoute() : Boolean {
