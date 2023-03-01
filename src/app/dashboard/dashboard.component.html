@@ -1,25 +1,11 @@
 <div class="banner"><h2>Hello {{username}}!</h2></div>
 <div class="subnav">
-    <section (click)="showLeaderboard()" [ngClass]="{'active': leaderboardActive}">Leaderboard</section>
+    <a [routerLink] = "['./leaderboard']" [ngClass]="{'active': isRouteLeaderboard()}">Leaderboard</a>
     <section (click)="showRecipes()" [ngClass]="{'active': recipesActive}">Recipes</section>
     <section (click)="showTeam()" [ngClass]="{'active': teamActive}">Team</section>
 </div>
-<table *ngIf="leaderboardActive">
-    <thead>
-        <tr>
-            <th>Rank</th>
-            <th class="th-left">Username</th>
-            <th>Points</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of leaderboard; let i = index;">
-            <td>{{i+1}}</td>
-            <td class="td-left">{{user.username}}</td>
-            <td>{{user.points}}</td>
-        </tr>
-    </tbody>
-</table>
+
+<router-outlet></router-outlet>
 
 <div *ngIf="view">
     <button (click)="showMyRecipes()" *ngIf="recipesActive" [ngClass]="{'activeBtn': recipesOnlyUserActive}">My Recipes</button>

@@ -10,7 +10,6 @@ import { AuthService } from '../auth.service';
 })
 export class DashboardComponent {
     username: String = '';
-    leaderboard: Array<any> = [];
     recipes: Array<any> = [];
 
     leaderboardActive: Boolean = true;
@@ -35,21 +34,15 @@ export class DashboardComponent {
             console.log(response);
         });
 
-        this.showLeaderboard();
+        this.router.navigateByUrl('/dashboard/leaderboard');
     }
 
-    showLeaderboard() {
+    isRouteLeaderboard() {
         this.view = true;
         this.recipesActive = false;
         this.teamActive = false;
-        this.leaderboardActive = true;
 
-        this.http.get<any>('/api/leaderboard').subscribe((response: any) => {
-            if(response['success']) {
-                this.leaderboard = response.body.leaderboard;
-                console.log(this.leaderboard);
-            }
-        });
+        this.router.url === '/dashboard/leaderboard';
     }
 
     showRecipes() {
