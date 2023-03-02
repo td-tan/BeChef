@@ -25,7 +25,8 @@ const routes: Routes = [
         component: RecipesComponent,
         children: [
           { path: ':id', component: RecipeContentComponent }
-        ]
+        ],
+        runGuardsAndResolvers: 'always'
       },
       { path: 'team', component: TeamComponent },
     ]
@@ -46,7 +47,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' }),
     FormsModule,
     ReactiveFormsModule
   ],

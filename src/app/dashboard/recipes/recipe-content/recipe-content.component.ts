@@ -25,11 +25,12 @@ export class RecipeContentComponent {
     getRecipeContent(recipe_id: String) {
         console.log(recipe_id);
         this.http.get<any>(`/api/recipe/${recipe_id}`).subscribe((response: any) => {
-            if(response['success']) {
+            if(response['success'] && (response.body.recipeContents.length !== 0)) {
                 this.recipeContents = response.body.recipeContents;
                 console.log(this.recipeContents);
             } else {
                 this.recipeContents = [];
+                this.router.navigateByUrl('/dashboard/recipes');
             }
         });
     }

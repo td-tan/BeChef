@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipes',
@@ -15,14 +15,29 @@ export class RecipesComponent {
 
     viewContent: Boolean = false;
     
-
+    navigationSub;
     constructor(private http:HttpClient,
-                private router:Router) {}
+                private router:Router) {
+
+        this.navigationSub = this.router.events.subscribe(e => {
+            if (e instanceof NavigationEnd) {
+                if (this.router.url === '/dashboard/recipes')
+                {
+                    this.viewContent = false;
+                }
+            }
+        });
+    }
 
     ngOnInit() {
         this.showMyRecipes();
     }
 
+    ngOnDestroy() {
+        if(this.navigationSub) {
+            this.navigationSub.unsubscribe();
+        }
+    }
 
     showMyRecipes() {
         this.recipesAllActive = false;
