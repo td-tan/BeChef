@@ -34,7 +34,7 @@ export class AppComponent {
   isDashboardRoute() : Boolean {
     return (this.router.url === '/dashboard' || 
         this.router.url === '/dashboard/leaderboard' || 
-        this.router.url === '/dashboard/recipes' || 
+        this.router.url.includes('/dashboard/recipes') || // For dynamic recipe res
         this.router.url === '/dashboard/team');
   }
 
