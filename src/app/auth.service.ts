@@ -6,8 +6,17 @@ import { shareReplay } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  private username: string = '';
 
   constructor(private http: HttpClient) { }
+
+  setUsername(username:string) {
+    this.username = username;
+  }
+
+  getUsername(): string {
+    return this.username;
+  }
 
   login(email:string, password:string) {
     return this.http.post<any>('/api/login', {email, password}).pipe(

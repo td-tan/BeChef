@@ -1,5 +1,6 @@
 <div>
     <button (click)="back()">Go Back</button>
+    <button *ngIf="myRecipe()" (click)="edit()">Edit</button>
     <div *ngFor="let content of recipeContents" class="recipeContent">
         <div class="recipeInfo card">
             <h3>{{content.recipe.title}}</h3>

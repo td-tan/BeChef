@@ -8,7 +8,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent {
-    username: String = '';
+    username: string = '';
 
     constructor(
         private router:Router,
@@ -20,6 +20,7 @@ export class DashboardComponent {
                 this.router.navigateByUrl('/');
             }
             this.username = response.body.username;
+            this.authService.setUsername(this.username);
             console.log(response);
         });
 

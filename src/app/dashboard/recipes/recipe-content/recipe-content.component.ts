@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../auth.service';
 
 @Component({
   selector: 'app-recipe-content',
@@ -12,7 +13,8 @@ export class RecipeContentComponent {
 
     constructor(private http:HttpClient,
                 private router:Router,
-                private route: ActivatedRoute) {}
+                private route:ActivatedRoute,
+                private authService:AuthService) {}
     
     ngOnInit() {
         const routeParams = this.route.snapshot.paramMap;
@@ -33,6 +35,17 @@ export class RecipeContentComponent {
                 this.router.navigateByUrl('/dashboard/recipes');
             }
         });
+    }
+
+    myRecipe(): Boolean {
+        if (this.recipeContents.length === 0) {
+            return false;
+        }
+        return this.authService.getUsername() === this.recipeContents[0].creator.username;
+    }
+
+    edit() {
+
     }
 
 

@@ -205,6 +205,7 @@ async function getRecipeContent(req, res) {
                     'recipeOf.$id': mongoose.Types.ObjectId(rid)
                 }
             },
+            // Stage 1: Get recipe content
             {
                 $lookup: {
                     from: 'recipes',
@@ -216,6 +217,18 @@ async function getRecipeContent(req, res) {
             {
                 $unwind: '$recipe'
             },
+            // Stage 2 : Get Creator for recipe
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'recipe.createdBy.$id',
+                    foreignField: '_id',
+                    as: 'creator'
+                }
+            },
+            {
+                $unwind: '$creator'
+            },
             {
                 $project: {
                     _id: 1,
@@ -224,7 +237,8 @@ async function getRecipeContent(req, res) {
                     'recipe.title': 1,
                     'recipe.duration': 1,
                     'recipe.difficulty': 1,
-                    'recipe.visibility': 1
+                    'recipe.visibility': 1,
+                    'creator.username': 1
                 }
             }
               
