@@ -34,6 +34,10 @@ const UserSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
+  team: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team'
+  }
 });
 
 UserSchema.methods.hashPassword = function(password) {
