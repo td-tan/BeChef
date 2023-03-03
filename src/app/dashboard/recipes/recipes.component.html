@@ -20,6 +20,15 @@
                 <td>{{recipe.likes}}</td>
                 <td *ngIf="recipesOnlyUserActive">{{recipe.visibility}}</td>
                 <td *ngIf="recipesAllActive">{{recipe.creator.username}}</td>
+                <button *ngIf="recipesOnlyUserActive" class="tbtn" (click)="removeRecipe($event, recipe._id)">-</button>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <button *ngIf="recipesOnlyUserActive" class="tbtn" (click)="addRecipe()">+</button>
             </tr>
         </tbody>
     </table>

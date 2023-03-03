@@ -76,4 +76,13 @@ export class RecipesComponent {
         this.viewContent = true;
         this.router.navigateByUrl(`/dashboard/recipes/${recipe_id}`);
     }
+
+    addRecipe() {
+        
+    }
+
+    removeRecipe(event: Event, recipe_id: String) {
+        event.stopPropagation();
+        console.log(recipe_id);
+    }
 }
