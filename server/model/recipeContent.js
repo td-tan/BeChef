@@ -10,7 +10,6 @@ const RecipeContentSchema = mongoose.Schema({
         ingredient: {
             name: {
                 type: String,
-                unique: true,
                 required: true,
             },
             amount: {
