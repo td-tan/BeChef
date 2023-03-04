@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing' 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { DashboardComponent } from './dashboard.component';
@@ -10,7 +11,10 @@ describe('DashboardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ DashboardComponent ],
-      imports: [ HttpClientTestingModule ]
+      imports: [ 
+        HttpClientTestingModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
 
@@ -30,13 +34,13 @@ describe('DashboardComponent', () => {
 
   it('should display submenu navigation', () => {
     const subnav: HTMLElement = fixture.nativeElement.querySelector('.subnav');
-    const sections: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('.subnav section');
+    const a: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('.subnav a');
 
     expect(subnav).toBeTruthy();
-    expect(sections?.length).toBe(3);
-    expect(sections[0].textContent).toContain('Leaderboard');
-    expect(sections[1].textContent).toContain('Recipes');
-    expect(sections[2].textContent).toContain('Team');
+    expect(a?.length).toBe(3);
+    expect(a[0].textContent).toContain('Leaderboard');
+    expect(a[1].textContent).toContain('Recipes');
+    expect(a[2].textContent).toContain('Team');
   });
 
 });
