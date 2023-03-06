@@ -21,4 +21,9 @@ describe('LeaderboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display leaderboard table', () => {
+    const table: HTMLElement = fixture.nativeElement.querySelector('table');
+    expect(table).toBeTruthy();
+  });
 });

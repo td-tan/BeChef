@@ -25,4 +25,10 @@ describe('RecipeContentComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display back button only', () => {
+    const buttons: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('button');
+    expect(buttons?.length).toBe(1);
+    expect(buttons[0].textContent).toContain('Go Back');
+  });
 });

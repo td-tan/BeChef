@@ -20,4 +20,11 @@ describe('TeamComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display all buttons', () => {
+    const buttons: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('button');
+    expect(buttons?.length).toBe(2);
+    expect(buttons[0].textContent).toContain('Join Team');
+    expect(buttons[1].textContent).toContain('Create Team');
+  });
 });

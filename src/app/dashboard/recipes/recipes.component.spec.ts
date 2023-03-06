@@ -25,4 +25,12 @@ describe('RecipesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display buttons without delete', () => {
+    const buttons: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('button');
+    expect(buttons?.length).toBe(3);
+    expect(buttons[0].textContent).toContain('My Recipes');
+    expect(buttons[1].textContent).toContain('Show All');
+    expect(buttons[2].textContent).toContain('+');
+  });
 });
