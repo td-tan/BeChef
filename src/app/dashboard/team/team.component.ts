@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./team.component.sass']
 })
 export class TeamComponent {
-
+  
+  hasTeam(): Boolean {
+    return false;
+  }
 }
