@@ -11,18 +11,20 @@ function authenticate(jwtBearerToken) {
   return jwt.verify(jwtBearerToken, RSA_PRIVATE_KEY);
 }
 
-function validateInputFormat(input, type) {
+function validateInputFormat(input, type, res) {
   if (typeof input !== type) {
-    res.send({
-      error: 'User does exists'
-    });
-    return;
+    return false;
   }
+  return true;
 }
 
 function login(req, res) {
-    validateInputFormat(req.body.email, String);
-    validateInputFormat(req.body.password, String);
+    if (validateInputFormat(req.body.email, String) || validateInputFormat(req.body.password, String)) {
+      res.send({
+        error: 'Invalid input'
+      });
+      return;
+    }
     
     User.findOne({ email: req.body.email}, (err, user) => {
         if (err) {
@@ -94,9 +96,12 @@ async function logout(req, res) {
 }
 
 function register(req, res) {
-      validateInputFormat(req.body.username, String);
-      validateInputFormat(req.body.email, String);
-      validateInputFormat(req.body.password, String);
+      if (validateInputFormat(req.body.username, String, res) || validateInputFormat(req.body.email, String, res) || validateInputFormat(req.body.password, String, res)) {
+        res.send({
+          error: 'Invalid input'
+        });
+        return;
+      }
 
       const emailOrUsername = { 
         $or: [
