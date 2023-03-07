@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const crypto = require('crypto');
 
 const User = require('../model/user');
 const ErrorController = require('./error');
@@ -38,8 +39,11 @@ function login(req, res) {
     
         if (user.verifyPassword(req.body.password)) {
           console.log("MATCH");
-    
-          const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
+
+          // Use user secret key as part of jwt sign key
+          // After logout will invalidate token by changing secret key
+          console.log(user.secret_key);
+          const jwtBearerToken = jwt.sign({secret_key: user.secret_key}, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn: "1d",
             subject: user.id
@@ -48,7 +52,8 @@ function login(req, res) {
     
           res.cookie("SESSIONID", jwtBearerToken, {
             httpOnly: true, 
-            secure: true
+            secure: true,
+            overwrite: true
           });
           
           res.send({
@@ -61,6 +66,31 @@ function login(req, res) {
           });
         }
       });
+}
+
+async function logout(req, res) {
+    if (!req.cookies) {
+        ErrorController.errorhandler(err);
+        return;
+    }
+    const jwtBearerToken = req.cookies['SESSIONID'];
+    try {
+        const decoded = authenticate(jwtBearerToken);
+        
+        const user = await User.findOneAndUpdate(
+            { _id: decoded['sub'] }, 
+            { secret_key: crypto.randomBytes(16).toString('Hex')});
+        
+        console.log(user);
+        res.send({
+            success: true
+        });
+    } catch (err) {
+        console.error(err);
+        res.send({
+            error: 'Invalid Token'
+        });
+    }
 }
 
 function register(req, res) {
@@ -91,12 +121,27 @@ function register(req, res) {
         newUser.email = req.body.email;
         newUser.hashPassword(req.body.password);
         
-        newUser.save((err, User) => {
+        newUser.save((err, user) => {
             if (err) {
               ErrorController.errorhandler(err, req, res);
               return;
             }
-            console.log(User);
+            console.log(user);
+
+            console.log(user.secret_key);
+            const jwtBearerToken = jwt.sign({secret_key: user.secret_key}, RSA_PRIVATE_KEY, {
+                algorithm: 'RS256',
+                expiresIn: "1d",
+                subject: user.id
+            });
+            console.log(jwtBearerToken);
+        
+            res.cookie("SESSIONID", jwtBearerToken, {
+                httpOnly: true, 
+                secure: true,
+                overwrite: true
+            });
+
             res.send({
               success: true
             });
@@ -107,6 +152,7 @@ function register(req, res) {
 
 module.exports = { 
     login, 
+    logout,
     register,
     authenticate
 };

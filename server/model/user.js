@@ -20,10 +20,25 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  last_login: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
+  secret_key: {
+    type: String,
+    default: crypto.randomBytes(16).toString('Hex'),
+    required: true
+  },
   points: {
     type: Number,
     default: 0
   },
+  team: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team',
+    default: null
+  }
 });
 
 UserSchema.methods.hashPassword = function(password) {

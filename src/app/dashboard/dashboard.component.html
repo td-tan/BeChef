@@ -1,0 +1,8 @@
+<div class="banner"><h2>Hello {{username}}!</h2></div>
+<div class="subnav">
+    <a [routerLink] = "['./leaderboard']" [ngClass]="{'active': isRouteLeaderboard()}">Leaderboard</a>
+    <a [routerLink] = "['./recipes']" [ngClass]="{'active': isRouteRecipes()}">Recipes</a>
+    <a [routerLink] = "['./team']" [ngClass]="{'active': isRouteTeam()}">Team</a>
+</div>
+
+<router-outlet></router-outlet>

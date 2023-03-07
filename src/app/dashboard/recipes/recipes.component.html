@@ -1,0 +1,36 @@
+<div *ngIf="!viewContent">
+    <button (click)="showMyRecipes()" [ngClass]="{'activeBtn': recipesOnlyUserActive}">My Recipes</button>
+    <button (click)="showAllRecipes()" [ngClass]="{'activeBtn': recipesAllActive}">Show All</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Difficulty</th>
+                <th>Duration</th>
+                <th>Likes</th>
+                <th *ngIf="recipesOnlyUserActive">Public</th>
+                <th *ngIf="recipesAllActive">Creator</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let recipe of recipes" class="row" (click)="openRecipe(recipe._id)">
+                <td>{{recipe.title}}</td>
+                <td>{{recipe.difficulty}}</td>
+                <td>{{recipe.duration.value}} {{recipe.duration.unit}}</td>
+                <td>{{recipe.likes}}</td>
+                <td *ngIf="recipesOnlyUserActive">{{recipe.visibility}}</td>
+                <td *ngIf="recipesAllActive">{{recipe.creator.username}}</td>
+                <button *ngIf="recipesOnlyUserActive" class="tbtn" (click)="removeRecipe($event, recipe._id)">-</button>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <button *ngIf="recipesOnlyUserActive" class="tbtn" (click)="addRecipe()">+</button>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<router-outlet></router-outlet>

@@ -73,7 +73,55 @@ form
         color: $primary-color
         border-style: none
 
+table
+    margin: 40px auto
+    width: 70%
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2)
+    border-radius: 15px
+    border-collapse: collapse
+    
+    
+    th
+        font-size: 25px
+        padding: 12px
+
+    td
+        text-align: center
+        padding-bottom: 20px
+    
+
+.th-left
+    text-align: left
+
+.td-left
+    text-align: left !important
+    padding-left: 10px
+
 app-root
     display: flex
     flex-direction: column
     min-height: 100vh
+
+app-dashboard
+    width: 100%
+
+    button
+        height: 50px
+        cursor: pointer
+        background-color: white
+        color: $primary-color
+        margin: 10px
+        font-size: 30px
+        border: 2px solid $primary-color
+        border-radius: 12px
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4)
+
+    button:hover
+        background-color: $primary-color
+        color: $secondary-color
+
+    button:active, .activeBtn
+        background-color: $secondary-color
+        color: $primary-color
+        border-style: none

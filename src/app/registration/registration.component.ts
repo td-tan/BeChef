@@ -35,7 +35,7 @@ export class RegistrationComponent {
             this.error_msg = response['error'];
           } else {
             if(response['success']) {
-              this.router.navigateByUrl('/Dashboard');
+              this.router.navigateByUrl('/dashboard');
             }
           }
         });
